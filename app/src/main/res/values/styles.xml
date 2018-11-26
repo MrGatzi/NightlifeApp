@@ -3,14 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="rosa">#EA79E5</item>
-        <item name="rosaAccent">#DA0DD1</item>
-        <item name="orange">#FFC357</item>
-        <item name="orangeAccent">#FFA401</item>
-        <item name="violetBright">#A693F7</item>
-        <item name="violetAccent">#6C00FF</item>
-        <item name="violet">#5822B1</item>
-        <item name="violetDark">#25096A</item>
+        <item name="colorPrimary">@color/violet</item>
+        <item name="colorPrimaryDark">@color/violetDark</item>
+        <item name="colorAccent">@color/violetAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
