@@ -39,10 +39,20 @@
         <item name="android:lineSpacingExtra">1.4dp</item>
     </style>
 
+    <style name="Main_Button">
+        <item name="android:layout_width">77dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:text">GRIASTI</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/violetBright</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
