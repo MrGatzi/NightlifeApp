@@ -21,8 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="17dp"
         android:text="Venue Name"
+        android:textAppearance="@style/H2"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -31,8 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="2dp"
         android:text="Event Name"
+        android:textAppearance="@style/H1"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/imageView" />
 
@@ -43,6 +45,7 @@
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="18dp"
         android:text="Today"
+        android:textAppearance="@style/H4"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -54,6 +57,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
         android:text="Here should be a short description of the event or the venue if there is currently no event."
+        android:textAppearance="@style/P"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
