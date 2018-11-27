@@ -40,10 +40,10 @@
         <item name="android:lineSpacingExtra">1.4dp</item>
     </style>
 
-    <style name="Main_Button" parent="@style/Widget.AppCompat.Button.Borderless">
+    <style name="Main_Button" parent="@android:style/Widget.Button">
         <item name="android:layout_width">77dp</item>
         <item name="android:layout_height">30dp</item>
-        <item name="android:text">BRING ME</item>
+        <item name="android:text">Bring Me</item>
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/violetBright</item>
         <item name="android:fontFamily">@font/lato_regular</item>
@@ -55,13 +55,52 @@
         <item name="android:radius">25dp</item>
     </style>
 
-    <style name="Filter_Button" parent="@style/Widget.AppCompat.Button.Borderless">
+    <style name="Filter_Button_Bright" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">105dp</item>
         <item name="android:layout_height">105dp</item>
         <item name="android:text">Ich bin ein Filter</item>
+        <item name="android:gravity">bottom|center</item>
         <item name="android:drawableTop"></item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/violetBright</item>
+        <item name="android:shape">rectangle</item>
+        <item name="android:width">1dip</item>
+        <item name="android:radius">10dp</item>
+        <item name="android:onClick">
+            <gradient>
+                <item name="android:startColor">@color/gradientStart</item>
+                <item name="android:endColor">@color/gradientEnd</item>
+                <item name="android:angle">135</item>
+            </gradient>
+        </item>
+    </style>
 
-
+    <style name="Filter_Button_Dark" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">105dp</item>
+        <item name="android:layout_height">105dp</item>
+        <item name="android:text">Ich bin ein Filter</item>
+        <item name="android:gravity">bottom|center</item>
+        <item name="android:drawableTop"></item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColor">@color/violetBright</item>
+        <item name="android:background">@color/violet</item>
+        <item name="android:shape">rectangle</item>
+        <item name="android:width">1dip</item>
+        <item name="android:radius">10dp</item>
+        <item name="android:onClick">
+            <gradient>
+                <item name="android:startColor">@color/gradientStart</item>
+                <item name="android:endColor">@color/gradientEnd</item>
+                <item name="android:angle">135</item>
+            </gradient>
+        </item>
     </style>
 
     <style name="AppTheme.NoActionBar">
