@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/violetDark</item>
-        <item name="colorSecondary">@color/violet</item>
+        <item name="colorPrimaryDark">@color/violet</item>
         <item name="colorAccent">@color/violetAccent</item>
     </style>
 
@@ -49,15 +49,23 @@
         <item name="android:fontFamily">@font/lato_regular</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:onClick">@color/violetAccent</item>
-        <item name="android:background">transparent</item>
+        <!--<item name="android:background">transparent</item>-->
         <item name="android:shape">rectangle</item>
-        <item name="android:radius">5dip</item>
         <item name="android:width">1dip</item>
-
+        <item name="android:radius">7dp</item>
        <!-- <item name="android:bottomRightRadius">7dp</item>
         <item name="android:bottomLeftRadius">7dp</item>
         <item name="android:topLeftRadius">7dp</item>
         <item name="android:topRightRadius">7dp</item>-->
+    </style>
+
+    <style name="Filter_Button" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">105dp</item>
+        <item name="android:layout_height">105dp</item>
+        <item name="android:text">Ich bin ein Filter</item>
+        <item name="android:drawableTop"></item>
+
+
     </style>
 
     <style name="AppTheme.NoActionBar">
