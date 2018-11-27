@@ -36,6 +36,7 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/greyDark</item>
         <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:lineSpacingExtra">1.4dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
