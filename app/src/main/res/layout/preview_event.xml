@@ -7,7 +7,7 @@
     android:background="@drawable/round_outline">
 
     <ImageView
-        android:id="@+id/event_image"
+        android:id="@+id/preview_event_eventImage"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:scaleType="centerCrop"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/event_name"
+        android:id="@+id/preview_event_eventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -28,36 +28,36 @@
         android:shadowRadius="10"
         android:text="Event Name"
         android:textAppearance="@style/H1"
-        app:layout_constraintBottom_toBottomOf="@+id/event_image"
-        app:layout_constraintStart_toStartOf="@+id/event_image" />
+        app:layout_constraintBottom_toBottomOf="@+id/preview_event_eventImage"
+        app:layout_constraintStart_toStartOf="@+id/preview_event_eventImage" />
 
     <TextView
-        android:id="@+id/event_date"
+        android:id="@+id/preview_event_eventDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="18dp"
-        android:text="Today"
+        android:text="Heute"
         android:textAppearance="@style/H4"
-        app:layout_constraintBottom_toBottomOf="@+id/event_image"
+        app:layout_constraintBottom_toBottomOf="@+id/preview_event_eventImage"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/event_shortDescription"
+        android:id="@+id/preview_event_eventShortDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
-        android:text="Here should be a short description of the event. (max. 200 digits)"
+        android:text="Hier wird später eine kurze Beschreibung des Events stehen. (max. 200 Zeichen)"
         android:textAppearance="@style/P"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_image" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_event_eventImage" />
 
     <View
-        android:id="@+id/event_divider"
+        android:id="@+id/preview_event_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="18dp"
@@ -67,10 +67,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_shortDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_event_eventShortDescription" />
 
     <TextView
-        android:id="@+id/event_km"
+        android:id="@+id/preview_event_eventKm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -78,39 +78,40 @@
         android:text="5km"
         android:textAppearance="@style/H4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_event_divider" />
 
     <TextView
-        android:id="@+id/event_priceIndex"
+        android:id="@+id/previewEvent_eventPriceIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:text="€€€"
         android:textAppearance="@style/H4"
-        app:layout_constraintStart_toEndOf="@+id/event_km"
-        app:layout_constraintTop_toBottomOf="@+id/event_divider" />
+        app:layout_constraintStart_toEndOf="@+id/preview_event_eventKm"
+        app:layout_constraintTop_toBottomOf="@+id/preview_event_divider" />
 
     <Button
-        android:id="@+id/event_more"
+        android:id="@+id/previewEvent_moreButton"
         style="@style/Main_Button"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="MORE"
+        android:text="MEHR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_event_divider" />
 
     <Button
-        android:id="@+id/event_bringMe"
+        android:id="@+id/previewEvent_routeButton"
         style="@style/Main_Button"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
-        android:text="BRING ME"
+        android:text="ROUTE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/event_more"
-        app:layout_constraintTop_toBottomOf="@+id/event_divider"
+        app:layout_constraintEnd_toStartOf="@+id/previewEvent_moreButton"
+        app:layout_constraintTop_toBottomOf="@+id/preview_event_divider"
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

@@ -8,18 +8,18 @@
     android:background="@color/violet">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/list_listView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="14dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="16dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

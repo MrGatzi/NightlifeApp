@@ -7,7 +7,7 @@
     android:background="@drawable/round_outline">
 
     <ImageView
-        android:id="@+id/venue_image"
+        android:id="@+id/preview_venue_venueImage"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:scaleType="centerCrop"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/venue_name"
+        android:id="@+id/preview_venue_venueEventName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -25,13 +25,13 @@
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="10"
-        android:text="Venue Name"
+        android:text="Event Name"
         android:textAppearance="@style/H2"
-        app:layout_constraintBottom_toTopOf="@+id/venue_EventName"
+        app:layout_constraintBottom_toTopOf="@+id/preview_venue_venueName"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/venue_EventName"
+        android:id="@+id/preview_venue_venueName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -40,27 +40,27 @@
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="10"
-        android:text="Event Name"
+        android:text="Lokal Name"
         android:textAppearance="@style/H1"
-        app:layout_constraintBottom_toBottomOf="@+id/venue_image"
-        app:layout_constraintStart_toStartOf="@+id/venue_image" />
+        app:layout_constraintBottom_toBottomOf="@+id/preview_venue_venueImage"
+        app:layout_constraintStart_toStartOf="@+id/preview_venue_venueImage" />
 
     <TextView
-        android:id="@+id/venue_shortDescription"
+        android:id="@+id/preview_venue_venueShortDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
-        android:text="Here should be a short description of the venue. (max. 200 digits)"
+        android:text="Hier wird später eine kurze Beschreibung des Lokals stehen. (max. 200 Zeichen)"
         android:textAppearance="@style/P"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venue_image" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_venue_venueImage" />
 
     <View
-        android:id="@+id/venue_divider"
+        android:id="@+id/preview_venue_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="18dp"
@@ -70,10 +70,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venue_shortDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_venue_venueShortDescription" />
 
     <TextView
-        android:id="@+id/venue_km"
+        android:id="@+id/preview_venue_venueKm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -81,39 +81,40 @@
         android:text="5km"
         android:textAppearance="@style/H4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venue_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_venue_divider" />
 
     <TextView
-        android:id="@+id/venue_priceIndex"
+        android:id="@+id/preview_venue_venuePriceIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:text="€€€"
         android:textAppearance="@style/H4"
-        app:layout_constraintStart_toEndOf="@+id/venue_km"
-        app:layout_constraintTop_toBottomOf="@+id/venue_divider" />
+        app:layout_constraintStart_toEndOf="@+id/preview_venue_venueKm"
+        app:layout_constraintTop_toBottomOf="@+id/preview_venue_divider" />
 
     <Button
-        android:id="@+id/venue_more"
+        android:id="@+id/preview_venue_moreButton"
         style="@style/Main_Button"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="MORE"
+        android:text="MEHR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/venue_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_venue_divider" />
 
     <Button
-        android:id="@+id/venue_button"
+        android:id="@+id/preview_venue_routeButton"
         style="@style/Main_Button"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
-        android:text="BRING ME"
+        android:text="ROUTE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/venue_more"
-        app:layout_constraintTop_toBottomOf="@+id/venue_divider"
+        app:layout_constraintEnd_toStartOf="@+id/preview_venue_moreButton"
+        app:layout_constraintTop_toBottomOf="@+id/preview_venue_divider"
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

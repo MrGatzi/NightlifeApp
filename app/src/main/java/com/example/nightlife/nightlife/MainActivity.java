@@ -1,14 +1,11 @@
 package com.example.nightlife.nightlife;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -16,7 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // array with content for the list view elements (event_preview and venue_preview layouts)
+    // array with content for the list view elements (preview_event and preview_venue layouts)
     String[] EVENT_NAMES = {"Event Name 1", "Event Name 2", "Event Name 3"};
 
     @Override
@@ -39,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         // set up listView
-        ListView listview = (ListView)findViewById(R.id.listView);
+        ListView list_listView = (ListView)findViewById(R.id.list_listView);
         CustomAdapter customAdapter = new CustomAdapter();
-        listview.setAdapter(customAdapter);
-    }
+        list_listView.setAdapter(customAdapter);
+        }
 
 
     // create Adapter for listView
@@ -65,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.event_preview, null);
+            convertView = getLayoutInflater().inflate(R.layout.preview_event, null);
 
-            // get elements in event_preview layout
-            TextView event_names = (TextView)convertView.findViewById(R.id.event_name);
+            // get elements in preview_event layout
+            TextView event_names = (TextView)convertView.findViewById(R.id.preview_event_eventName);
 
-            // set elements in event_preview layout
+            // set elements in preview_event layout
             event_names.setText(EVENT_NAMES[position]);
 
             convertView.setClipToOutline(true);
