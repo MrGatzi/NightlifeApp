@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@drawable/round_outline">
 
     <ImageView
         android:id="@+id/venue_image"
@@ -15,9 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--android:background="@color/orange"/>-->
-
 
     <TextView
         android:id="@+id/venue_name"
@@ -55,7 +52,7 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
-        android:text="Here should be a short description of the event or the venue if there is currently no event."
+        android:text="Here should be a short description of the venue. (max. 200 digits)"
         android:textAppearance="@style/P"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"

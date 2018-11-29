@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             // set elements in event_preview layout
             event_names.setText(EVENT_NAMES[position]);
 
+            convertView.setClipToOutline(true);
             return convertView;
         }
     }
