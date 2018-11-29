@@ -8,8 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    // array with content for the list view elements (event_preview and venue_preview layouts)
+    String[] EVENT_NAMES = {"Event Name 1", "Event Name 2", "Event Name 3"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,43 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // set up listView
+        ListView listview = (ListView)findViewById(R.id.listView);
+        CustomAdapter customAdapter = new CustomAdapter();
+        listview.setAdapter(customAdapter);
+    }
+
+    // create Adapter for listView
+    class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return EVENT_NAMES.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = getLayoutInflater().inflate(R.layout.event_preview, null);
+
+            // get elements in event_preview layout
+            TextView event_names = (TextView)convertView.findViewById(R.id.event_name);
+
+            // set elements in event_preview layout
+            event_names.setText(EVENT_NAMES[position]);
+
+            return convertView;
+        }
     }
 
     @Override
