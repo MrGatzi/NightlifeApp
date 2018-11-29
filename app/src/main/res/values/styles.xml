@@ -42,7 +42,7 @@
 
     <style name="Main_Button" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/button</item>
-        <item name="android:layout_width">77dp</item>
+        <item name="android:layout_width">90dp</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:text">Bring Me</item>
         <item name="android:textSize">13sp</item>
