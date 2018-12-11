@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class PreviewListAdapter extends ArrayAdapter<Location> {
 
+    public static final int VENUE = 0;
+    public static final int EVENT = 1;
+
     Context context;
     int resource;
     ArrayList<Location> locations = null;
@@ -30,14 +33,18 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        if (locations.get(position) instanceof Venue){
+        // instantiate only for the first time
+        if (convertView == null) {
+            if (getItemViewType(position) == VENUE) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.preview_venue, parent, false);
+            } else {
+                convertView = LayoutInflater.from(context).inflate(R.layout.preview_event, parent, false);
+            }
+        }
+
+        if (getItemViewType(position) == VENUE) {
             // get current location
             Venue currentLocation = (Venue)locations.get(position);
-
-            // instantiate only for the first time
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.preview_venue, parent, false);
-            }
 
             // get each view of the venue layout
             ImageView venueImage = (ImageView)convertView.findViewById(R.id.preview_venue_venueImage);
@@ -59,11 +66,6 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             // get current location
             Event currentLocation = (Event)locations.get(position);
 
-            // instantiate only for the first time
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.preview_event, parent, false);
-            }
-
             // get each view of the event layout
             ImageView eventImage = (ImageView)convertView.findViewById(R.id.preview_event_eventImage);
             TextView eventName = (TextView)convertView.findViewById(R.id.preview_event_eventName);
@@ -82,6 +84,21 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
         }
 
         return convertView;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Location currentLocation = locations.get(position);
+        if (currentLocation instanceof Venue) {
+            return VENUE;
+        } else {
+            return EVENT;
+        }
     }
 }
 
