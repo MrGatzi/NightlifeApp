@@ -8,7 +8,7 @@
     android:background="@color/violet">
 
     <ListView
-        android:id="@+id/list_listView"
+        android:id="@+id/list_previewList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="14dp"
