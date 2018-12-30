@@ -1,5 +1,6 @@
 package com.example.nightlife.nightlife;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,16 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    // array with content for the list view elements (preview_event and preview_venue layouts)
-    String[] EVENT_NAMES = {"Event Name 1", "Event Name 2", "Event Name 3"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
+
+        ImageView search = (ImageView) findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Search clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         /*
         * DUMMY OBJECT START -----------------------------------------------------------------------
@@ -150,12 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
         // test: list preview
         ListView previewList = (ListView)findViewById(R.id.list_previewList);
-
         PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, mergedList);
-        // CustomAdapter customAdapter = new CustomAdapter();
         previewList.setAdapter(previewListAdapter);
-        // previewList.setAdapter(customAdapter);
-
 
 
 
@@ -172,49 +179,47 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-    /*
-    // create Adapter for listView
-    class CustomAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return EVENT_NAMES.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.preview_event, null);
-
-            // get elements in preview_event layout
-            TextView event_names = (TextView)convertView.findViewById(R.id.preview_event_eventName);
-
-            // set elements in preview_event layout
-            event_names.setText(EVENT_NAMES[position]);
-
-            convertView.setClipToOutline(true);
-            return convertView;
-        }
-    }
-    */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    /*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.contact:
+                Toast.makeText(this, "Contact clicked!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.impressum:
+                Toast.makeText(this, "Impressum clicked!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter:
+                Toast.makeText(this, "Filter clicked!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.calendar:
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                            }
+                        }, year, month, dayOfMonth);
+
+                datePickerDialog.show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+/*
     // template menu
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -1,10 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!--menu-->
+
+    <item
+        android:id="@+id/contact"
+        android:title="Contact"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/impressum"
+        android:title="Impressum"
+        app:showAsAction="never"/>
+
+    <!--toobar icons-->
+
+    <item
+        android:id="@+id/calendar"
+        android:icon="@drawable/icon_calendar"
+        android:title=""
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/icon_filter"
+        android:title=""
+        app:showAsAction="ifRoom" />
+
+</menu>
+
+<!--
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.nightlife.nightlife.MainActivity">-->
+    &lt;!&ndash; xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.nightlife.nightlife.MainActivity">&ndash;&gt;
     <item
         android:id="@+id/item1"
-        android:icon="@drawable/search_icon"
+        android:icon="@drawable/icon_search"
         android:title="Search"
         app:showAsAction="ifRoom"
 
@@ -42,5 +76,5 @@
         android:id="@+id/item3"
         android:title="Impressum"
         app:showAsAction="never"/>
-</menu>
+</menu>-->
 

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/violetDark</item>
         <item name="colorPrimaryDark">@color/violet</item>
         <item name="colorAccent">@color/violetAccent</item>
+        <item name="popupTheme">@style/PopUpTheme</item>
     </style>
 
     <style name="H1" parent="@android:style/TextAppearance">
@@ -108,9 +109,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-
+    <!--
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    -->
+
+    <style name="PopUpTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name = "android:background">@color/white</item>
+        <item name = "android:textColor">@color/greyDark</item>
+    </style>
 
 </resources>
