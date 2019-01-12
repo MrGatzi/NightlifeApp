@@ -34,11 +34,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RequestQueue queue;
+    private ArrayList<Location> locations = new ArrayList<Location>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,36 +61,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         /*
-        * DUMMY OBJECT START -----------------------------------------------------------------------
-        */
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
-
-// Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("myState", response);
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("myState", "error");
-
-            }
-        });
-
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
+         * DUMMY OBJECT START -----------------------------------------------------------------------
 
         List<Location> venues = new ArrayList<Location>();
         List<Location> events = new ArrayList<Location>();
-        List<List<Location>> locations = new ArrayList<List<Location>>();
+        List<List<Location>> locationTest = new ArrayList<List<Location>>();
 
         venues.add(
                 new Venue(
@@ -113,30 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
-        venues.add(
-                new Venue(
-                        32,
-                        "QABOOS",
-                        "",
-                        "Dübelstepü",
-                        "33.825512",
-                        "-82.156488",
-                        4,
-                        1,
-                        19,
-                        "Nostrud ipsum aliquip laboris veniam aliqua labore amet pariatur magna enim aute consectetur. In consequat amet ea elit minim minim cillum do reprehenderit magna commodo deserunt. Tempor non id Lorem aliquip deserunt id sit duis voluptate sit qui esse Lorem nulla. Aliquip do proident nostrud dolor reprehenderit ea laborum cillum non in reprehenderit mollit occaecat. Elit aute aute dolore dolor quis voluptate est occaecat pariatur. Reprehenderit tempor sit ad sunt in sunt occaecat excepteur velit dolore in mollit.",
-                        "dolor reprehenderit nostrud aliquip eu dolore fugiat cupidatat nostrud ullamco amet ad qui tempor et",
-                        "Cumminsville",
-                        4932,
-                        "Dahl Court",
-                        39,
-                        new OpeningHours(1,
-                                "Sun Jan 07 2018 17:05:08 GMT+0000 (UTC)",
-                                "Wed Jan 04 2017 20:14:00 GMT+0000 (UTC)"
-                        )
-                )
-        );
-
         events.add(
 
                 new Event(
@@ -158,36 +115,14 @@ public class MainActivity extends AppCompatActivity {
                 )
         );
 
-        events.add(new Event(
-                        5,
-                        "OBLIQ",
-                        "Chill",
-                        "10.75869",
-                        "85.740765",
-                        "Tue May 01 2018 06:07:33 GMT+0000 (UTC)",
-                        4,
-                        27,
-                        27,
-                        "Deserunt irure et culpa cillum. Dolor et laboris aliquip aute. Amet non do deserunt est non adipisicing mollit aliquip ea cillum duis. Duis aute velit non magna tempor ex qui enim ullamco dolor voluptate. Mollit ex est esse id ex Lorem cillum aute ipsum reprehenderit eiusmod deserunt labore eu. Proident ea dolore ex nostrud irure esse dolore quis.",
-                        "sint sunt qui elit ipsum veniam ullamco duis esse consectetur excepteur id minim sit proident",
-                        "Wanamie",
-                        4574,
-                        "Beekman Place",
-                        27
-                )
-        );
-
-        locations.add(venues);
-        locations.add(events);
-        /*
-         * DUMMY OBJECT END ------------------------------------------------------------------------
-         */
+        locationTest.add(venues);
+        locationTest.add(events);
 
         // test: get long and lat of all locations
-        for (int i=0; i<locations.size(); i++){
-            for (int j=0; j<locations.get(i).size(); j++){
-                double locLat = Double.parseDouble(locations.get(i).get(j).getLocLat());
-                double locLong = Double.parseDouble(locations.get(i).get(j).getLocLong());
+        for (int i=0; i<locationTest.size(); i++){
+            for (int j=0; j<locationTest.get(i).size(); j++){
+                double locLat = Double.parseDouble(locationTest.get(i).get(j).getLocLat());
+                double locLong = Double.parseDouble(locationTest.get(i).get(j).getLocLong());
 
                 // do fancy map shit with the coordinates
 
@@ -195,27 +130,116 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // merge listlist to one list
-        ArrayList<Location> mergedList = new ArrayList<Location>(locations.get(0));
-        mergedList.addAll(locations.get(1));
+        ArrayList<Location> mergedList = new ArrayList<Location>(locationTest.get(0));
+        mergedList.addAll(locationTest.get(1));
 
-        // test: list preview
+        * DUMMY OBJECT END ------------------------------------------------------------------------
+        */
+
+
+        queue = Volley.newRequestQueue(this);
+        jsonParse();
+
         ListView previewList = (ListView)findViewById(R.id.list_previewList);
-        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, mergedList);
+        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations);
         previewList.setAdapter(previewListAdapter);
 
+    }
 
+    private void jsonParse() {
 
-        /*
-        // template floating button (bottom right corner)
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // get venues
+                            JSONArray venueArray = response.getJSONArray("Venues");
+                            for (int i = 0; i < venueArray.length(); i++) {
+                                JSONObject venue = venueArray.getJSONObject(i);
+
+                                String tempLongDescription = venue.getString("LongDescription");
+                                String tempShortDescription = venue.getString("ShortDescription");
+                                JSONArray weekArray = venue.getJSONArray("Week");
+                                if (weekArray.length() != 0){
+                                    JSONObject weekDescriptions = weekArray.getJSONObject(0);
+                                    tempLongDescription = weekDescriptions.getString("LongDescription");
+                                    tempShortDescription = weekDescriptions.getString("ShortDescription");
+                                }
+
+                                String tempDOpen = "";
+                                String tempDClose = "";
+                                JSONArray openingHoursArray = venue.getJSONArray("OpeningHours");
+                                if (openingHoursArray.length() != 0){
+                                    JSONObject openingHours = openingHoursArray.getJSONObject(0);
+                                    tempDOpen = openingHours.getString("DOpen");
+                                    tempDClose = openingHours.getString("DClose");
+                                }
+
+                                locations.add(new Venue(
+                                                venue.getInt("VenueID"),
+                                                venue.getString("Name"),
+                                                "Cocktailnight",
+                                                venue.getString("Type"),
+                                                venue.getDouble("LocLat"),
+                                                venue.getDouble("LocLong"),
+                                                venue.getDouble("PriceIndex"),
+                                                venue.getDouble("EntryFee"),
+                                                venue.getInt("Age"),
+                                                tempLongDescription,
+                                                tempShortDescription,
+                                                venue.getString("AddressCity"),
+                                                venue.getString("AddressPLZ"),
+                                                venue.getString("AddressStreet"),
+                                                venue.getString("AddressNr"),
+                                                venue.getDouble("distance"),
+                                                new OpeningHours(
+                                                        1,
+                                                        tempDOpen,
+                                                        tempDClose
+                                                )
+                                        )
+                                );
+                            }
+
+                            // get events
+                            JSONArray eventArray = response.getJSONArray("Events");
+                            for (int i = 0; i < eventArray.length(); i++) {
+                                JSONObject event = eventArray.getJSONObject(i);
+
+                                locations.add(new Event(
+                                                event.getInt("EventID"),
+                                                event.getString("Name"),
+                                                event.getString("Type"),
+                                                event.getDouble("LocLat"),
+                                                event.getDouble("LocLong"),
+                                                event.getString("Date"),
+                                                event.getDouble("PriceIndex"),
+                                                event.getDouble("EntryFee"),
+                                                event.getInt("Age"),
+                                                event.getString("LongDescription"),
+                                                event.getString("ShortDescription"),
+                                                event.getString("AddressCity"),
+                                                event.getString("AddressPLZ"),
+                                                event.getString("AddressStreet"),
+                                                event.getString("AddressNr"),
+                                                event.getDouble("distance")
+                                        )
+                                );
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Hallo Isi", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
             }
         });
-        */
+        queue.add(request);
     }
 
     @Override
@@ -257,31 +281,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-/*
-    // template menu
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-    */
-
-    /*
-    // template menu
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
 }

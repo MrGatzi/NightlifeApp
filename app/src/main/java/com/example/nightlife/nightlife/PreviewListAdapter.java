@@ -59,8 +59,18 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             venueEventName.setText(currentLocation.getVenueEventName());
             venueName.setText(currentLocation.getName());
             venueShortDescription.setText(currentLocation.getShortDescription());
-            //venueKm.setText();
-            venuePriceIndex.setText(String.valueOf(currentLocation.getPriceIndex()));
+            venueKm.setText(String.valueOf(currentLocation.getDistance()) + "km");
+
+            double pIndex = currentLocation.getPriceIndex();
+            String tempPIndexString = "";
+            if (pIndex > 7){
+                tempPIndexString = "€€€";
+            } else if (pIndex > 5) {
+                tempPIndexString = "€€";
+            } else {
+                tempPIndexString = "€";
+            }
+            venuePriceIndex.setText(tempPIndexString);
 
         } else {
             // get current location
@@ -75,12 +85,22 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             TextView eventPriceIndex = (TextView)convertView.findViewById(R.id.preview_event_eventPriceIndex);
 
             // set values with the current location data
-            //eventImage.setImageResource();
+            eventImage.setImageResource(R.drawable.party);
             eventName.setText(currentLocation.getName());
-            //eventDate.setText(currentLocation.getDate());
+            eventDate.setText(currentLocation.getDate());
             eventShortDescription.setText(currentLocation.getShortDescription());
-            //eventKm.setText();
-            eventPriceIndex.setText(String.valueOf(currentLocation.getPriceIndex()));
+            eventKm.setText(String.valueOf(currentLocation.getDistance()) + "km");
+
+            double pIndex = currentLocation.getPriceIndex();
+            String tempPIndexString = "";
+            if (pIndex > 7){
+                tempPIndexString = "€€€";
+            } else if (pIndex > 5) {
+                tempPIndexString = "€€";
+            } else {
+                tempPIndexString = "€";
+            }
+            eventPriceIndex.setText(tempPIndexString);
         }
 
         return convertView;
