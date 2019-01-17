@@ -88,4 +88,16 @@ public class Location {
 
     public double getDistance() { return distance; }
 
+    public String getPriceIndexSymbol() {
+        String priceIndexString = "";
+        if (priceIndex > 7){
+            priceIndexString = "€€€";
+        } else if (priceIndex > 5) {
+            priceIndexString = "€€";
+        } else {
+            priceIndexString = "€";
+        }
+        return priceIndexString;
+    }
+
 }

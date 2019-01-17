@@ -1,6 +1,7 @@
 package com.example.nightlife.nightlife;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -35,17 +37,30 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.io.Console;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
 
+    // global date (default: today) with calendar
+    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
+    int year = calendar.get(Calendar.YEAR);
+    int month = calendar.get(Calendar.MONTH);
+    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+    // weekday (in English: "Monday", …)
+    int dayOfWeek = getWeekdayInt(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -140,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         jsonParse();
 
-        ListView previewList = (ListView)findViewById(R.id.list_previewList);
-        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations);
+        final ListView previewList = (ListView)findViewById(R.id.list_previewList);
+        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, 5);
         previewList.setAdapter(previewListAdapter);
 
     }
@@ -160,46 +175,53 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < venueArray.length(); i++) {
                                 JSONObject venue = venueArray.getJSONObject(i);
 
-                                String tempLongDescription = venue.getString("LongDescription");
-                                String tempShortDescription = venue.getString("ShortDescription");
-                                JSONArray weekArray = venue.getJSONArray("Week");
-                                if (weekArray.length() != 0){
-                                    JSONObject weekDescriptions = weekArray.getJSONObject(0);
-                                    tempLongDescription = weekDescriptions.getString("LongDescription");
-                                    tempShortDescription = weekDescriptions.getString("ShortDescription");
+                                // get venueEvents
+                                VenueEvent[] venueEvents = new VenueEvent[6];
+                                JSONArray venueEventsArray = venue.getJSONArray("Week");
+                                if (venueEventsArray.length() != 0) {
+                                    for (int h = 0; h < venueEventsArray.length(); h++) {
+                                        JSONObject venueEventsObject = venueEventsArray.getJSONObject(h);
+
+                                        VenueEvent tempVE = new VenueEvent( venueEventsObject.getInt("WeekDay"),
+                                                                            // venueEventsObject.getString("VenueEventName"),
+                                                                            "Cocktailnight",
+                                                                            venueEventsObject.getString("LongDescription"),
+                                                                            venueEventsObject.getString("ShortDescription"));
+                                        venueEvents[h] = tempVE;
+                                    }
                                 }
 
-                                String tempDOpen = "";
-                                String tempDClose = "";
+                                // get openingHours
+                                OpeningHours[] openingHours = new OpeningHours[6];
                                 JSONArray openingHoursArray = venue.getJSONArray("OpeningHours");
-                                if (openingHoursArray.length() != 0){
-                                    JSONObject openingHours = openingHoursArray.getJSONObject(0);
-                                    tempDOpen = openingHours.getString("DOpen");
-                                    tempDClose = openingHours.getString("DClose");
+                                if (openingHoursArray.length() != 0) {
+                                    for (int h = 0; h < openingHoursArray.length(); h++) {
+                                        JSONObject openingHoursObject = openingHoursArray.getJSONObject(h);
+                                        OpeningHours tempOH = new OpeningHours( openingHoursObject.getInt("WeekDay"),
+                                                                                openingHoursObject.getString("DOpen"),
+                                                                                openingHoursObject.getString("DClose"));
+                                        openingHours[h] = tempOH;
+                                    }
                                 }
 
                                 locations.add(new Venue(
                                                 venue.getInt("VenueID"),
                                                 venue.getString("Name"),
-                                                "Cocktailnight",
                                                 venue.getString("Type"),
                                                 venue.getDouble("LocLat"),
                                                 venue.getDouble("LocLong"),
                                                 venue.getDouble("PriceIndex"),
                                                 venue.getDouble("EntryFee"),
                                                 venue.getInt("Age"),
-                                                tempLongDescription,
-                                                tempShortDescription,
+                                                venue.getString("LongDescription"),
+                                                venue.getString("ShortDescription"),
                                                 venue.getString("AddressCity"),
                                                 venue.getString("AddressPLZ"),
                                                 venue.getString("AddressStreet"),
                                                 venue.getString("AddressNr"),
                                                 venue.getDouble("distance"),
-                                                new OpeningHours(
-                                                        1,
-                                                        tempDOpen,
-                                                        tempDClose
-                                                )
+                                                venueEvents,
+                                                openingHours
                                         )
                                 );
                             }
@@ -242,6 +264,27 @@ public class MainActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    public int getWeekdayInt(String weekday){
+        switch (weekday) {
+            case "Monday":
+                return 1;
+            case "Tuesday":
+                return 2;
+            case "Wednesday":
+                return 3;
+            case "Thursday":
+                return 4;
+            case "Friday":
+                return 5;
+            case "Saturday":
+                return 6;
+            case "Sunday":
+                return 7;
+            default:
+                return -1;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -264,10 +307,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Filter clicked!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.calendar:
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
                         new DatePickerDialog.OnDateSetListener() {

@@ -7,29 +7,29 @@
     android:background="@drawable/round_outline">
 
     <TextView
-        android:id="@+id/event_content_facts_km"
+        android:id="@+id/location_content_facts_km"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="5KM"
         android:textAppearance="@style/H4"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/event_content_facts_moreButton"
+        app:layout_constraintStart_toStartOf="@+id/location_content_facts_moreButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/event_content_facts_priceIndex"
+        android:id="@+id/location_content_facts_priceIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="€€€"
         android:textAppearance="@style/H4"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="@+id/event_content_facts_moreButton"
+        app:layout_constraintEnd_toEndOf="@+id/location_content_facts_moreButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/event_content_facts_moreButton"
+        android:id="@+id/location_content_facts_moreButton"
         android:layout_width="120dp"
         android:layout_height="45dp"
         android:background="@drawable/button_filled"
@@ -41,19 +41,19 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/event_content_facts_typeIcon"
+        android:id="@+id/location_content_facts_typeIcon"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_marginStart="30dp"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/event_content_facts_type"
-        app:layout_constraintStart_toEndOf="@+id/event_content_facts_moreButton"
+        app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_type"
+        app:layout_constraintStart_toEndOf="@+id/location_content_facts_moreButton"
         app:srcCompat="@drawable/icon_cocktail" />
 
     <TextView
-        android:id="@+id/event_content_facts_type"
+        android:id="@+id/location_content_facts_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -61,24 +61,24 @@
         android:text="Bar / Pub"
         android:textAppearance="@style/P"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/event_content_facts_typeIcon"
-        app:layout_constraintStart_toEndOf="@+id/event_content_facts_typeIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_typeIcon"
+        app:layout_constraintStart_toEndOf="@+id/location_content_facts_typeIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/event_content_facts_ageIcon"
+        android:id="@+id/location_content_facts_ageIcon"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/event_content_facts_age"
-        app:layout_constraintStart_toStartOf="@+id/event_content_facts_typeIcon"
-        app:layout_constraintTop_toTopOf="@+id/event_content_facts_age"
+        app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_age"
+        app:layout_constraintStart_toStartOf="@+id/location_content_facts_typeIcon"
+        app:layout_constraintTop_toTopOf="@+id/location_content_facts_age"
         app:srcCompat="@drawable/icon_cocktail" />
 
     <TextView
-        android:id="@+id/event_content_facts_age"
+        android:id="@+id/location_content_facts_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -87,24 +87,24 @@
         android:text="Kein Alterslimit"
         android:textAppearance="@style/P"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/event_content_facts_entrance"
-        app:layout_constraintStart_toEndOf="@+id/event_content_facts_ageIcon"
-        app:layout_constraintTop_toBottomOf="@+id/event_content_facts_type" />
+        app:layout_constraintBottom_toTopOf="@+id/location_content_facts_entrance"
+        app:layout_constraintStart_toEndOf="@+id/location_content_facts_ageIcon"
+        app:layout_constraintTop_toBottomOf="@+id/location_content_facts_type" />
 
     <ImageView
-        android:id="@+id/event_content_facts_entranceIcon"
+        android:id="@+id/location_content_facts_entranceIcon"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/event_content_facts_entrance"
-        app:layout_constraintStart_toStartOf="@+id/event_content_facts_typeIcon"
-        app:layout_constraintTop_toTopOf="@+id/event_content_facts_entrance"
+        app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_entrance"
+        app:layout_constraintStart_toStartOf="@+id/location_content_facts_typeIcon"
+        app:layout_constraintTop_toTopOf="@+id/location_content_facts_entrance"
         app:srcCompat="@drawable/icon_cocktail" />
 
     <TextView
-        android:id="@+id/event_content_facts_entrance"
+        android:id="@+id/location_content_facts_entrance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -112,6 +112,6 @@
         android:textAppearance="@style/P"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/event_content_facts_entranceIcon" />
+        app:layout_constraintStart_toEndOf="@+id/location_content_facts_entranceIcon" />
 
 </android.support.constraint.ConstraintLayout>
