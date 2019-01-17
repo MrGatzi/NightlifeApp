@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         jsonParse();
 
         final ListView previewList = (ListView)findViewById(R.id.list_previewList);
-        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, 5);
+        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
         previewList.setAdapter(previewListAdapter);
 
     }
@@ -176,15 +176,14 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject venue = venueArray.getJSONObject(i);
 
                                 // get venueEvents
-                                VenueEvent[] venueEvents = new VenueEvent[6];
                                 JSONArray venueEventsArray = venue.getJSONArray("Week");
+                                VenueEvent[] venueEvents = new VenueEvent[venueEventsArray.length()];
                                 if (venueEventsArray.length() != 0) {
                                     for (int h = 0; h < venueEventsArray.length(); h++) {
                                         JSONObject venueEventsObject = venueEventsArray.getJSONObject(h);
 
                                         VenueEvent tempVE = new VenueEvent( venueEventsObject.getInt("WeekDay"),
-                                                                            // venueEventsObject.getString("VenueEventName"),
-                                                                            "Cocktailnight",
+                                                                            venueEventsObject.getString("VenueEventName"),
                                                                             venueEventsObject.getString("LongDescription"),
                                                                             venueEventsObject.getString("ShortDescription"));
                                         venueEvents[h] = tempVE;
@@ -192,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 // get openingHours
-                                OpeningHours[] openingHours = new OpeningHours[6];
                                 JSONArray openingHoursArray = venue.getJSONArray("OpeningHours");
+                                OpeningHours[] openingHours = new OpeningHours[openingHoursArray.length()];
                                 if (openingHoursArray.length() != 0) {
                                     for (int h = 0; h < openingHoursArray.length(); h++) {
                                         JSONObject openingHoursObject = openingHoursArray.getJSONObject(h);
@@ -267,19 +266,19 @@ public class MainActivity extends AppCompatActivity {
     public int getWeekdayInt(String weekday){
         switch (weekday) {
             case "Monday":
-                return 1;
+                return 0;
             case "Tuesday":
-                return 2;
+                return 1;
             case "Wednesday":
-                return 3;
+                return 2;
             case "Thursday":
-                return 4;
+                return 3;
             case "Friday":
-                return 5;
+                return 4;
             case "Saturday":
-                return 6;
+                return 5;
             case "Sunday":
-                return 7;
+                return 6;
             default:
                 return -1;
         }

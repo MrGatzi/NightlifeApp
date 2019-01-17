@@ -25,7 +25,7 @@
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="10"
-        android:text="Event Name"
+        android:text=""
         android:textAppearance="@style/H2"
         app:layout_constraintBottom_toTopOf="@+id/preview_venue_venueName"
         app:layout_constraintStart_toStartOf="parent" />

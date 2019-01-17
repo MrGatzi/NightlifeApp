@@ -35,25 +35,25 @@ public class VenueEvent {
 
         String weekdayDE;
         switch (weekday) {
-            case 1:
+            case 0:
                 weekdayDE = "Montag";
                 break;
-            case 2:
+            case 1:
                 weekdayDE = "Dienstag";
                 break;
-            case 3:
+            case 2:
                 weekdayDE = "Mittwoch";
                 break;
-            case 4:
+            case 3:
                 weekdayDE = "Donnerstag";
                 break;
-            case 5:
+            case 4:
                 weekdayDE = "Freitag";
                 break;
-            case 6:
+            case 5:
                 weekdayDE = "Samstag";
                 break;
-            case 7:
+            case 6:
                 weekdayDE = "Sonntag";
                 break;
             default:

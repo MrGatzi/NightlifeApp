@@ -71,6 +71,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             if (currentLocation.getVenueEvents().length != 0) {
                 if (currentLocation.getVenueEventByWeekday(dayOfWeek) != null) {
                     venueEventName.setText(currentLocation.getVenueEventByWeekday(dayOfWeek).getVenueEventName());
+                    venueShortDescription.setText(currentLocation.getVenueEventByWeekday(dayOfWeek).getShortDescription());
                 }
             }
 
@@ -175,6 +176,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             if (((Venue) currentLocation).getVenueEvents().length == 0) {
                 if (((Venue)currentLocation).getVenueEventByWeekday(dayOfWeek) != null) {
                     intent.putExtra("venueEventName", ((Venue) currentLocation).getVenueEventByWeekday(dayOfWeek).getVenueEventName());
+                    intent.putExtra("longDescription", ((Venue) currentLocation).getVenueEventByWeekday(dayOfWeek).getLongDescription());
                 }
             }
             if (((Venue) currentLocation).getOpeningHours().length == 0) {
