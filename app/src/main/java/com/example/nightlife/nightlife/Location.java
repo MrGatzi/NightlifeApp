@@ -1,5 +1,7 @@
 package com.example.nightlife.nightlife;
 
+import java.text.DecimalFormat;
+
 public class Location {
 
     private String name;
@@ -90,14 +92,22 @@ public class Location {
 
     public String getPriceIndexSymbol() {
         String priceIndexString = "";
-        if (priceIndex > 7){
-            priceIndexString = "€€€";
-        } else if (priceIndex > 5) {
+        if (priceIndex == 1){
+            priceIndexString = "€";
+        } else if (priceIndex == 2) {
             priceIndexString = "€€";
         } else {
-            priceIndexString = "€";
+            priceIndexString = "€€€";
         }
         return priceIndexString;
     }
 
+    public double getDistanceShort() {
+        return round(distance, 1);
+    }
+
+    public double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
 }

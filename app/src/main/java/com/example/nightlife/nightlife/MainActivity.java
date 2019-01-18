@@ -3,6 +3,8 @@ package com.example.nightlife.nightlife;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -76,81 +78,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        /*
-         * DUMMY OBJECT START -----------------------------------------------------------------------
-
-        List<Location> venues = new ArrayList<Location>();
-        List<Location> events = new ArrayList<Location>();
-        List<List<Location>> locationTest = new ArrayList<List<Location>>();
-
-        venues.add(
-                new Venue(
-                        5,
-                        "MANGLO",
-                        "Cocktailnight",
-                        "Jazz",
-                        "-86.914175",
-                        "-89.130904",
-                        2,
-                        28,
-                        27,
-                        "Nulla cillum occaecat magna in consectetur eiusmod incididunt. Do laboris dolore commodo mollit ipsum consectetur. Veniam velit qui esse occaecat exercitation esse cillum occaecat veniam. Nulla cillum ex sit aliqua ad aliquip commodo proident. Ad commodo ex consequat laboris esse culpa enim. Lorem excepteur sint tempor culpa ut ullamco eu Lorem duis voluptate velit pariatur.",
-                        "amet id sint ea aliquip cupidatat occaecat ea anim fugiat irure eu proident ullamco mollit",
-                        "Singer",
-                        1628,
-                        "Seigel Street",
-                        2,
-                        new OpeningHours(
-                                1,
-                                "Tue Apr 29 2014 23:43:50 GMT+0000 (UTC)",
-                                "Wed Mar 05 2014 16:42:44 GMT+0000 (UTC)"
-                        )
-                )
-        );
-
-        events.add(
-
-                new Event(
-                        8,
-                        "SULTRAX",
-                        "Chill",
-                        "-63.619657",
-                        "-48.589644",
-                        "Fri Oct 12 2018 01:10:34 GMT+0000 (UTC)",
-                        4,
-                        33,
-                        24,
-                        "Eiusmod veniam cillum cillum culpa aliquip laboris fugiat sunt excepteur elit duis excepteur minim. Sunt do non commodo ullamco nisi voluptate esse esse commodo id quis est qui. Pariatur consectetur reprehenderit non nostrud incididunt laboris labore sunt aliqua.",
-                        "dolor consequat mollit voluptate excepteur consequat ut adipisicing fugiat culpa id do quis minim commodo",
-                        "Sexton",
-                        1415,
-                        "Kossuth Place",
-                        21
-                )
-        );
-
-        locationTest.add(venues);
-        locationTest.add(events);
-
-        // test: get long and lat of all locations
-        for (int i=0; i<locationTest.size(); i++){
-            for (int j=0; j<locationTest.get(i).size(); j++){
-                double locLat = Double.parseDouble(locationTest.get(i).get(j).getLocLat());
-                double locLong = Double.parseDouble(locationTest.get(i).get(j).getLocLong());
-
-                // do fancy map shit with the coordinates
-
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.getMenu().getItem(0).setChecked(true);
+        bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_list:
+                        break;
+                    case R.id.navigation_map:
+                        Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                        startActivity(intent);
+                        break;
+                }
             }
-        }
-
-        // merge listlist to one list
-        ArrayList<Location> mergedList = new ArrayList<Location>(locationTest.get(0));
-        mergedList.addAll(locationTest.get(1));
-
-        * DUMMY OBJECT END ------------------------------------------------------------------------
-        */
-
+        });
 
         queue = Volley.newRequestQueue(this);
         jsonParse();
@@ -163,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void jsonParse() {
 
-        String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
+        // String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
+        String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/48.373027/14.516546";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {

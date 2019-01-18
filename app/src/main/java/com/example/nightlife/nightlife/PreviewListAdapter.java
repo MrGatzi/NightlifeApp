@@ -64,7 +64,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             venueImage.setImageResource(R.drawable.pub);
             venueName.setText(currentLocation.getName());
             venueShortDescription.setText(currentLocation.getShortDescription());
-            venueKm.setText(String.valueOf(currentLocation.getDistance()) + "km");
+            venueKm.setText(String.valueOf(currentLocation.getDistanceShort()) + "km");
             venuePriceIndex.setText(currentLocation.getPriceIndexSymbol());
 
             // check if there are venueEvents
@@ -111,7 +111,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             eventName.setText(currentLocation.getName());
             eventDate.setText(currentLocation.getDate());
             eventShortDescription.setText(currentLocation.getShortDescription());
-            eventKm.setText(String.valueOf(currentLocation.getDistance()) + "km");
+            eventKm.setText(String.valueOf(currentLocation.getDistanceShort()) + "km");
             eventPriceIndex.setText(currentLocation.getPriceIndexSymbol());
 
             // implement buttons
