@@ -5,45 +5,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.Console;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -51,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
+
+    private boolean[] filter;
 
     // global date (default: today) with calendar
     Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -88,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.navigation_map:
                         Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                        intent.putExtra("year", year);
+                        intent.putExtra("month", month);
+                        intent.putExtra("dayOfMonth", dayOfMonth);
                         startActivity(intent);
                         break;
                 }
@@ -246,7 +234,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Impressum clicked!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.filter:
-                Toast.makeText(this, "Filter clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, FilterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.calendar:
 

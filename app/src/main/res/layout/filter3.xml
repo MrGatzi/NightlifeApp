@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/violet">
+
+    <TextView
+        android:id="@+id/filter3_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="Wie weit darf die Location entfernt sein?"
+        android:textAppearance="@style/H3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/filter3_button1_near"
+        style="@style/Filter_Button_Bright"
+        android:layout_width="wrap_content"
+        android:layout_height="123dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Ich möchte zu Fuß nach Hause gehen können"
+        android:textOff="Ich möchte zu Fuß nach Hause gehen können"
+        android:background="@drawable/filter_bright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter3_question" />
+
+    <ToggleButton
+        android:id="@+id/filter3_button2_medium"
+        style="@style/Filter_Button_Bright"
+        android:layout_width="wrap_content"
+        android:layout_height="123dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Das Taxi sollte nicht all zu teuer sein"
+        android:textOff="Das Taxi sollte nicht all zu teuer sein"
+        android:background="@drawable/filter_bright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/filter3_button3_far"
+        app:layout_constraintStart_toEndOf="@+id/filter3_button1_near"
+        app:layout_constraintTop_toBottomOf="@+id/filter3_question" />
+
+    <ToggleButton
+        android:id="@+id/filter3_button3_far"
+        style="@style/Filter_Button_Bright"
+        android:layout_width="wrap_content"
+        android:layout_height="123dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Ich würde ans andere Ende der Stadt fahren"
+        android:textOff="Ich würde ans andere Ende der Stadt fahren"
+        android:background="@drawable/filter_bright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter3_question" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -24,7 +24,8 @@
         <activity
             android:name=".ListItemActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".FilterActivity"></activity>
     </application>
 
 </manifest>

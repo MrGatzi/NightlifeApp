@@ -42,16 +42,16 @@ public class ListItemActivity extends AppCompatActivity {
         locationLongDescription.setText(intent.getStringExtra("longDescription"));
         locationOpeningHours.setText(intent.getStringExtra("openingHours"));
         locationAddress.setText(intent.getStringExtra("address"));
-        locationDistance.setText(intent.getStringExtra("distance"));
+        locationDistance.setText(String.valueOf(intent.getDoubleExtra("distance", 0.00)) + "km");
         locationPriceIndex.setText(intent.getStringExtra("priceIndex"));
         locationType.setText(intent.getStringExtra("type"));
-        locationAge.setText(intent.getStringExtra("age"));
-        locationEntrance.setText(intent.getStringExtra("entrance"));
+        locationAge.setText("Alter: " + String.valueOf(intent.getIntExtra("age", 0)));
+        locationEntrance.setText("Eintritt: " + String.valueOf(intent.getDoubleExtra("entrance", 0.00)) + "0€");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id= item.getItemId();
+        int id = item.getItemId();
 
         if (id == android.R.id.home){
             this.finish();

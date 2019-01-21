@@ -159,12 +159,12 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
         // get common values for passing to the list item activity
         intent.putExtra("name", currentLocation.getName());
         intent.putExtra("longDescription", currentLocation.getLongDescription());
-        intent.putExtra("distance", currentLocation.getDistance());
-        intent.putExtra("priceIndex", currentLocation.getPriceIndex());
+        intent.putExtra("distance", currentLocation.getDistanceShort());
+        intent.putExtra("priceIndex", currentLocation.getPriceIndexSymbol());
         intent.putExtra("type", currentLocation.getType());
         intent.putExtra("age", currentLocation.getAge());
         intent.putExtra("entrance", currentLocation.getEntryFee());
-        intent.putExtra("address", currentLocation.getAddressStreet() + currentLocation.getAddressNr() + currentLocation.getAddressPLZ() + currentLocation.getAddressCity());
+        intent.putExtra("address", currentLocation.getAddressStreet() + " " + currentLocation.getAddressNr() + ", " +  currentLocation.getAddressPLZ() + " " +  currentLocation.getAddressCity());
 
         // get individual values for passing to the list item activity
         intent.putExtra("eventDate", "");
