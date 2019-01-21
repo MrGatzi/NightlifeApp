@@ -1,15 +1,20 @@
 package com.example.nightlife.nightlife;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,13 +29,38 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private static final String TAG = "MainActivity";
+    private static final int ERROR_DIALOG_REQUEST =  9001;
+
+    //coordinates that cover the entire world
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
+
+
+    //widgets
+    private AutoCompleteTextView mSearchText;
+
+    //variables
+    private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
+    private GoogleApiClient mGoogleApiClient;
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
@@ -51,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mSearchText = (AutoCompleteTextView) findViewById(R.id.searchbar);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
@@ -63,24 +95,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
-        bottomNavigation.getMenu().getItem(0).setChecked(true);
-        bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
-            @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_list:
-                        break;
-                    case R.id.navigation_map:
-                        Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                        intent.putExtra("year", year);
-                        intent.putExtra("month", month);
-                        intent.putExtra("dayOfMonth", dayOfMonth);
-                        startActivity(intent);
-                        break;
+        if(isServicesOK()) {
+            BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+            bottomNavigation.getMenu().getItem(0).setChecked(true);
+            bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+                @Override
+                public void onNavigationItemReselected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_list:
+                            break;
+                        case R.id.navigation_map:
+                            Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                            intent.putExtra("year", year);
+                            intent.putExtra("month", month);
+                            intent.putExtra("dayOfMonth", dayOfMonth);
+                            startActivity(intent);
+                            break;
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        //searchfield autocomplete
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
+
+        mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
+                LAT_LNG_BOUNDS, null);
+
+        mSearchText.setAdapter(mPlaceAutocompleteAdapter);
+
 
         queue = Volley.newRequestQueue(this);
         jsonParse();
@@ -88,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         final ListView previewList = (ListView)findViewById(R.id.list_previewList);
         PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
         previewList.setAdapter(previewListAdapter);
-
     }
 
     private void jsonParse() {
@@ -250,5 +297,31 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isServicesOK(){
+        Log.d(TAG, "isServicesOK: checking Google Services version");
+
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+
+        if(available == ConnectionResult.SUCCESS){
+            //everything is fine and the user can make requests
+            Log.d(TAG, "isServicesOK: Google Play Services is working");
+            return true;
+        }else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //an error occured but we can resolve it
+            Log.d(TAG, "isServicesOK: an error occured but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }else{
+            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    //hides keyboard
+    private void hideSoftKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mSearchText.getWindowToken(), 0);
     }
 }
