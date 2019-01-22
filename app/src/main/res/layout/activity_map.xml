@@ -18,6 +18,8 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,12 +38,13 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:queryHint="City, Venue, …"
+                android:hint="City, Venue, …"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/search"
                 app:layout_constraintTop_toTopOf="parent"
-                android:imeOptions="actionSearch"/>
+                android:imeOptions="actionSearch"
+                android:nextFocusUp="@id/searchbar"
+                android:nextFocusLeft="@id/searchbar"/>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>

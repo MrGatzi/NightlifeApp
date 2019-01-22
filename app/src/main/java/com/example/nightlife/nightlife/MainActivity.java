@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
-
     private boolean[] filter;
 
     // global date (default: today) with calendar
@@ -86,14 +85,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-
-        ImageView search = (ImageView) findViewById(R.id.search);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Search clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         if(isServicesOK()) {
             BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
@@ -129,11 +120,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         mSearchText.setAdapter(mPlaceAutocompleteAdapter);
 
-
         queue = Volley.newRequestQueue(this);
         jsonParse();
 
-        final ListView previewList = (ListView)findViewById(R.id.list_previewList);
+        ListView previewList = (ListView)findViewById(R.id.list_previewList);
         PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
         previewList.setAdapter(previewListAdapter);
     }
