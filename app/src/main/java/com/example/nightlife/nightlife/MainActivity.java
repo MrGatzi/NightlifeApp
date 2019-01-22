@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
+    private ListView previewList;
 
     // global date (default: today) with calendar
     Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -120,17 +121,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         mSearchText.setAdapter(mPlaceAutocompleteAdapter);
 
+        previewList = (ListView)findViewById(R.id.list_previewList);
+        final PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
+        previewList.setAdapter(previewListAdapter);
+        Log.i("ListAdapterTest", "Elements in Adapter: " + previewListAdapter.getCount());
+
         queue = Volley.newRequestQueue(this);
         jsonParse();
+        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<JSONObject>() {
+            @Override
+            public void onRequestFinished(Request<JSONObject> request) {
+                previewListAdapter.notifyDataSetChanged();
+            }
+        });
+        Log.i("ListAdapterTest", "Locations after Json Parse: " + locations.size());
 
-        ListView previewList = (ListView)findViewById(R.id.list_previewList);
-        PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
-        previewList.setAdapter(previewListAdapter);
+
     }
 
 
 
     private void jsonParse() {
+
+
 
         // String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
         String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/48.373027/14.516546";
@@ -321,13 +334,36 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
 
-        // check if filter are active
+        ArrayList<Location> locations_filtered = locations;
+        boolean filter1_disco;
+        boolean filter1_bar;
+        boolean filter1_event;
 
-        // filter location array list
+        Intent intent = getIntent();
 
-        // update list view
+        // check if the intent is null (user never set a filter and no extras had been put in filter activity)
+        if (intent != null){
+            filter1_disco = intent.getBooleanExtra("state_filter1_disco", true);
+            filter1_bar = intent.getBooleanExtra("state_filter1_bar", true);
+            filter1_event = intent.getBooleanExtra("state_filter1_event", true);
 
+            // if one of the filter1 buttons is active > filter them
+            if (filter1_disco || filter1_bar || filter1_event) {
+                // delete all objects with type "Diskothek"
+                if (filter1_disco == false) {
 
+                }
+
+                // delete all objects with type "Bar" oder "Pub
+                if (filter1_bar == false) {
+
+                }
+
+                // delete all objects with type "Event"
+                if (filter1_event == false) {
+
+                }
+            }
+        }
     }
-
 }

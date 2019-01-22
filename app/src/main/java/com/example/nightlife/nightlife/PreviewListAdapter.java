@@ -2,8 +2,10 @@ package com.example.nightlife.nightlife;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,8 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
                 convertView = LayoutInflater.from(context).inflate(R.layout.preview_event, parent, false);
             }
         }
+
+        Log.i("ListAdapterTest", "loaded entry " + position);
 
         if (getItemViewType(position) == VENUE) {
             // get current location
