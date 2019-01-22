@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
-    private boolean[] filter;
 
     // global date (default: today) with calendar
     Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -101,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             intent.putExtra("month", month);
                             intent.putExtra("dayOfMonth", dayOfMonth);
                             startActivity(intent);
+                            onStop();
                             break;
                     }
                 }
@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
         previewList.setAdapter(previewListAdapter);
     }
+
+
 
     private void jsonParse() {
 
@@ -273,9 +275,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.filter:
                 Intent intent = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(intent);
+                onStop();
                 break;
             case R.id.calendar:
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MainActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -314,4 +316,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mSearchText.getWindowToken(), 0);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // check if filter are active
+
+        // filter location array list
+
+        // update list view
+
+
+    }
+
 }

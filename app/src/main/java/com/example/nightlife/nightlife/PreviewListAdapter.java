@@ -23,6 +23,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
 
     public static final int VENUE = 0;
     public static final int EVENT = 1;
+
     private ArrayList<Location> locations = null;
     int dayOfWeek;
 
