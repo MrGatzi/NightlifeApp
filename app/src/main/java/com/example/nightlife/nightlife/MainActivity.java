@@ -10,13 +10,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -89,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if(isServicesOK()) {
             BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
             bottomNavigation.getMenu().getItem(0).setChecked(true);
-            bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
-                public void onNavigationItemReselected(@NonNull MenuItem item) {
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_list:
                             break;
@@ -104,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             onStop();
                             break;
                     }
+                    return false;
                 }
             });
         }
