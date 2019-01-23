@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private ArrayList<Location> locations = new ArrayList<Location>();
     private ListView previewList;
 
+    // data for map activity
+    private String[] locations_name;
+    private double[] locations_lat;
+    private double[] locations_long;
+
     // global date (default: today) with calendar
     Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
     int year = calendar.get(Calendar.YEAR);
@@ -98,7 +103,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             intent.putExtra("year", year);
                             intent.putExtra("month", month);
                             intent.putExtra("dayOfMonth", dayOfMonth);
+                            intent.putExtra("names", locations_name);
+                            intent.putExtra("lats", locations_lat);
+                            intent.putExtra("longs", locations_long);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             onStop();
                             break;
                     }
@@ -135,7 +144,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
         Log.i("ListAdapterTest", "Locations after Json Parse: " + locations.size());
 
+        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<JSONObject>() {
+            @Override
+            public void onRequestFinished(Request<JSONObject> request) {
+                int size = locations.size();
+                locations_name = new String[size];
+                locations_lat = new double[size];
+                locations_long = new double[size];
 
+                for (int i = 0; i < locations.size(); i++){
+                    locations_name[i] = locations.get(i).getName();
+                    locations_lat[i] = locations.get(i).getLocLat();
+                    locations_long[i] = locations.get(i).getLocLong();
+                }
+            }
+        });
     }
 
 
@@ -287,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.filter:
                 Intent intent = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onStop();
                 break;
             case R.id.calendar:
@@ -333,36 +357,56 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
 
-        ArrayList<Location> locations_filtered = locations;
-        boolean filter1_disco;
-        boolean filter1_bar;
-        boolean filter1_event;
-
         Intent intent = getIntent();
 
         // check if the intent is null (user never set a filter and no extras had been put in filter activity)
         if (intent != null){
-            filter1_disco = intent.getBooleanExtra("state_filter1_disco", true);
-            filter1_bar = intent.getBooleanExtra("state_filter1_bar", true);
-            filter1_event = intent.getBooleanExtra("state_filter1_event", true);
+            ArrayList<Location> locations_filtered = new ArrayList<>();
+
+            boolean filter1_disco = intent.getBooleanExtra("state_filter1_disco", false);
+            boolean filter1_bar = intent.getBooleanExtra("state_filter1_bar", false);
+            boolean filter1_event = intent.getBooleanExtra("state_filter1_event", false);
 
             // if one of the filter1 buttons is active > filter them
             if (filter1_disco || filter1_bar || filter1_event) {
-                // delete all objects with type "Diskothek"
-                if (filter1_disco == false) {
-
+                //set all objects with type "Diskothek" invisible (if togglebutton is off)
+                if (!filter1_disco) {
+                    for (int i = 0; i < locations.size(); i++) {
+                        if (locations.get(i).getType() == "Diskothek"){
+                            locations.get(i).setVisible(false);
+                        }
+                    }
                 }
-
-                // delete all objects with type "Bar" oder "Pub
-                if (filter1_bar == false) {
-
+                //set all objects with type "Bar" or "Pub" invisible (if togglebutton is off)
+                if (!filter1_bar) {
+                    for (int i = 0; i < locations.size(); i++) {
+                        if (locations.get(i).getType() == "Bar" || locations.get(i).getType() == "Pub"){
+                            locations.get(i).setVisible(false);
+                        }
+                    }
                 }
-
-                // delete all objects with type "Event"
-                if (filter1_event == false) {
-
+                //set all objects with type "Event" invisible (if togglebutton is off)
+                if (!filter1_event) {
+                    for (int i = 0; i < locations.size(); i++) {
+                        if (locations.get(i).getType() == "Event"){
+                            locations.get(i).setVisible(false);
+                        }
+                    }
                 }
             }
+
+            // get all visible locations
+            for (int i = 0; i < locations.size(); i++){
+                if (locations.get(i).isVisible()) {
+                    locations_filtered.add(locations.get(i));
+                }
+            }
+
+            if (locations_filtered.size() != 0) {
+                // refresh adapter
+                ((PreviewListAdapter) previewList.getAdapter()).update(locations_filtered);
+            }
+
         }
     }
 }

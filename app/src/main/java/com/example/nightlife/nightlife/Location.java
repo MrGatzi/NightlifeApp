@@ -19,6 +19,9 @@ public class Location {
     private String addressNr;
     private double distance;
 
+    // for filtering
+    private boolean visible;
+
     public Location(String name, String type, double locLat, double locLong, double priceIndex, double entryFee, int age, String longDescription, String shortDescription, String addressCity, String addressPLZ, String addressStreet, String addressNr, double distance) {
         this.name = name;
         this.type = type;
@@ -34,6 +37,14 @@ public class Location {
         this.addressStreet = addressStreet;
         this.addressNr = addressNr;
         this.distance = distance;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public String getName() {

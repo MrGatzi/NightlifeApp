@@ -89,10 +89,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PlaceInfo mPlace;
     private Marker mMarker;
 
-    //variables from MainActivity
+    // datepicker + long, lats from Main Activity
     private int year;
     private int month;
     private int dayOfMonth;
+    private String[] locations_name;
+    private double[] locations_lat;
+    private double[] locations_long;
 
     //onCreate -> set activity_map layout and get location permissions
     @Override
@@ -107,6 +110,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         year = intent.getIntExtra("year", 0);
         month = intent.getIntExtra("month", 0);
         dayOfMonth = intent.getIntExtra("dayOfMonth", 0);
+        locations_name = intent.getStringArrayExtra("names");
+        locations_lat = intent.getDoubleArrayExtra("lats");
+        locations_long = intent.getDoubleArrayExtra("longs");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -129,6 +135,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     case R.id.navigation_list:
                         Intent intent = new Intent(MapActivity.this, MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;
                     case R.id.navigation_map:
                         break;
@@ -226,6 +233,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         try {
             if(mLocationPermissionsGranted){
                 Log.d(TAG, "getDeviceLocation: Location found!");
@@ -416,6 +424,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case R.id.filter:
                 Intent intent = new Intent(MapActivity.this, FilterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.calendar:
 
