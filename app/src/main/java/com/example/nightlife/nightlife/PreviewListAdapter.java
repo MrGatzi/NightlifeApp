@@ -38,7 +38,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
     }
 
     public void update(ArrayList<Location> locations_filtered) {
-        locations = new ArrayList<Location>();
+        locations.clear();
         locations.addAll(locations_filtered);
         notifyDataSetChanged();
     }

@@ -37,6 +37,7 @@ public class Location {
         this.addressStreet = addressStreet;
         this.addressNr = addressNr;
         this.distance = distance;
+        visible = true;
     }
 
     public boolean isVisible() {
