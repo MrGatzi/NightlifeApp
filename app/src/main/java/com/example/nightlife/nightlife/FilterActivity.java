@@ -95,6 +95,7 @@ public class FilterActivity extends AppCompatActivity {
         Intent intent_filter = new Intent(FilterActivity.this, MainActivity.class);
         intent_filter.putExtras(states);
         startActivity(intent_filter);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override

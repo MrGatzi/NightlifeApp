@@ -37,6 +37,12 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
         this.dayOfWeek = dayOfWeek;
     }
 
+    public void update(ArrayList<Location> locations_filtered) {
+        locations = new ArrayList<Location>();
+        locations.addAll(locations_filtered);
+        notifyDataSetChanged();
+    }
+
     // gets view (row layout) for each location preview item
     @NonNull
     @Override
