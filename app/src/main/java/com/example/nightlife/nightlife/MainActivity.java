@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
 
-// Request a string response from the provided URL.
+        // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-// Add the request to the RequestQueue.
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
         List<Location> venues = new ArrayList<Location>();
