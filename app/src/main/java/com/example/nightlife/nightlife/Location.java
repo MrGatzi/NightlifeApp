@@ -1,22 +1,25 @@
 package com.example.nightlife.nightlife;
 
+import java.text.DecimalFormat;
+
 public class Location {
 
     private String name;
     private String type;
-    private String locLat;
-    private String locLong;
-    private float priceIndex;
-    private float entryFee;
+    private double locLat;
+    private double locLong;
+    private double priceIndex;
+    private double entryFee;
     private int age;
     private String longDescription;
     private String shortDescription;
     private String addressCity;
-    private int addressPLZ;
+    private String addressPLZ;
     private String addressStreet;
-    private int addressNr;
+    private String addressNr;
+    private double distance;
 
-    public Location(String name, String type, String locLat, String locLong, float priceIndex, float entryFee, int age, String longDescription, String shortDescription, String addressCity, int addressPLZ, String addressStreet, int addressNr) {
+    public Location(String name, String type, double locLat, double locLong, double priceIndex, double entryFee, int age, String longDescription, String shortDescription, String addressCity, String addressPLZ, String addressStreet, String addressNr, double distance) {
         this.name = name;
         this.type = type;
         this.locLat = locLat;
@@ -30,6 +33,7 @@ public class Location {
         this.addressPLZ = addressPLZ;
         this.addressStreet = addressStreet;
         this.addressNr = addressNr;
+        this.distance = distance;
     }
 
     public String getName() {
@@ -40,19 +44,19 @@ public class Location {
         return type;
     }
 
-    public String getLocLat() {
+    public double getLocLat() {
         return locLat;
     }
 
-    public String getLocLong() {
+    public double getLocLong() {
         return locLong;
     }
 
-    public float getPriceIndex() {
+    public double getPriceIndex() {
         return priceIndex;
     }
 
-    public float getEntryFee() {
+    public double getEntryFee() {
         return entryFee;
     }
 
@@ -72,7 +76,7 @@ public class Location {
         return addressCity;
     }
 
-    public int getAddressPLZ() {
+    public String getAddressPLZ() {
         return addressPLZ;
     }
 
@@ -80,8 +84,30 @@ public class Location {
         return addressStreet;
     }
 
-    public int getAddressNr() {
+    public String getAddressNr() {
         return addressNr;
     }
 
+    public double getDistance() { return distance; }
+
+    public String getPriceIndexSymbol() {
+        String priceIndexString = "";
+        if (priceIndex == 1){
+            priceIndexString = "€";
+        } else if (priceIndex == 2) {
+            priceIndexString = "€€";
+        } else {
+            priceIndexString = "€€€";
+        }
+        return priceIndexString;
+    }
+
+    public double getDistanceShort() {
+        return round(distance, 1);
+    }
+
+    public double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
 }

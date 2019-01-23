@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/violetDark">
+
+    <TextView
+        android:id="@+id/filter2_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="Wie viel Geld willst du ausgeben?"
+        android:textAppearance="@style/H3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/filter2_button1_poor"
+        style="@style/Filter_Button_Dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Bin etwas knapp bei Kasse"
+        android:textOff="Bin etwas knapp bei Kasse"
+        android:background="@drawable/filter_dark"
+        android:textColor="@drawable/filter_dark_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter2_question" />
+
+    <ToggleButton
+        android:id="@+id/filter2_button2_medium"
+        style="@style/Filter_Button_Dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Genug für einen tollen Abend"
+        android:textOff="Genug für einen tollen Abend"
+        android:background="@drawable/filter_dark"
+        android:textColor="@drawable/filter_dark_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/filter2_button3_rich"
+        app:layout_constraintStart_toEndOf="@+id/filter2_button1_poor"
+        app:layout_constraintTop_toBottomOf="@+id/filter2_question" />
+
+    <ToggleButton
+        android:id="@+id/filter2_button3_rich"
+        style="@style/Filter_Button_Dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Heute geht alles auf mich!"
+        android:textOff="Heute geht alles auf mich!"
+        android:background="@drawable/filter_dark"
+        android:textColor="@drawable/filter_dark_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter2_question" />
+
+
+</android.support.constraint.ConstraintLayout>

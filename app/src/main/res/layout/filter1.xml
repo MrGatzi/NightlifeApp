@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/violet">
+
+    <TextView
+        android:id="@+id/filter1_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="Was willst du heute Abend machen?"
+        android:textAppearance="@style/H3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/filter1_button1_disco"
+        style="@style/Filter_Button_Bright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Tanzen bis zum Morgengrauen"
+        android:textOff="Tanzen bis zum Morgengrauen"
+        android:background="@drawable/filter_bright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter1_question" />
+
+    <ToggleButton
+        android:id="@+id/filter1_button2_bar"
+        style="@style/Filter_Button_Bright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Mit Freunden auf ein paar Bier"
+        android:textOff="Mit Freunden auf ein paar Bier"
+        android:background="@drawable/filter_bright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/filter1_button3_event"
+        app:layout_constraintStart_toEndOf="@+id/filter1_button1_disco"
+        app:layout_constraintTop_toBottomOf="@+id/filter1_question" />
+
+    <ToggleButton
+        android:id="@+id/filter1_button3_event"
+        style="@style/Filter_Button_Bright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="40dp"
+        android:drawableTop="@drawable/icon_placeholer_50dp"
+        android:textOn="Mal was Neues erleben"
+        android:textOff="Mal was Neues erleben"
+        android:background="@drawable/filter_bright"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter1_question" />
+
+
+</android.support.constraint.ConstraintLayout>

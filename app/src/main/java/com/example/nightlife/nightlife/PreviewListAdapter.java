@@ -1,37 +1,46 @@
 package com.example.nightlife.nightlife;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PreviewListAdapter extends ArrayAdapter<Location> {
+
+    Context context;
+    int resource;
 
     public static final int VENUE = 0;
     public static final int EVENT = 1;
 
-    Context context;
-    int resource;
-    ArrayList<Location> locations = null;
+    private ArrayList<Location> locations = null;
+    int dayOfWeek;
 
-    public PreviewListAdapter(@NonNull Context context, int resource, ArrayList<Location> locations) {
+    public PreviewListAdapter(@NonNull Context context, int resource, ArrayList<Location> locations, int dayOfWeek) {
         super(context, resource, locations);
         this.context = context;
         this.resource = resource;
         this.locations = locations;
+        this.dayOfWeek = dayOfWeek;
     }
 
     // gets view (row layout) for each location preview item
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         // instantiate only for the first time
         if (convertView == null) {
@@ -41,6 +50,8 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
                 convertView = LayoutInflater.from(context).inflate(R.layout.preview_event, parent, false);
             }
         }
+
+        Log.i("ListAdapterTest", "loaded entry " + position);
 
         if (getItemViewType(position) == VENUE) {
             // get current location
@@ -56,11 +67,37 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
 
             // set values with the current location data
             venueImage.setImageResource(R.drawable.pub);
-            venueEventName.setText(currentLocation.getVenueEventName());
             venueName.setText(currentLocation.getName());
             venueShortDescription.setText(currentLocation.getShortDescription());
-            //venueKm.setText();
-            venuePriceIndex.setText(String.valueOf(currentLocation.getPriceIndex()));
+            venueKm.setText(String.valueOf(currentLocation.getDistanceShort()) + "km");
+            venuePriceIndex.setText(currentLocation.getPriceIndexSymbol());
+
+            // check if there are venueEvents
+            if (currentLocation.getVenueEvents().length != 0) {
+                if (currentLocation.getVenueEventByWeekday(dayOfWeek) != null) {
+                    venueEventName.setText(currentLocation.getVenueEventByWeekday(dayOfWeek).getVenueEventName());
+                    venueShortDescription.setText(currentLocation.getVenueEventByWeekday(dayOfWeek).getShortDescription());
+                }
+            }
+
+            // implement buttons
+            Button venueMore = (Button)convertView.findViewById(R.id.preview_venue_moreButton);
+            Button venueRoute = (Button)convertView.findViewById(R.id.preview_venue_routeButton);
+
+            venueMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openListItemActivity(position);
+                }
+            });
+
+            venueRoute.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Route Button clicked! Item: " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
         } else {
             // get current location
@@ -75,14 +112,33 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             TextView eventPriceIndex = (TextView)convertView.findViewById(R.id.preview_event_eventPriceIndex);
 
             // set values with the current location data
-            //eventImage.setImageResource();
+            eventImage.setImageResource(R.drawable.party);
             eventName.setText(currentLocation.getName());
-            //eventDate.setText(currentLocation.getDate());
+            eventDate.setText(currentLocation.getDate());
             eventShortDescription.setText(currentLocation.getShortDescription());
-            //eventKm.setText();
-            eventPriceIndex.setText(String.valueOf(currentLocation.getPriceIndex()));
+            eventKm.setText(String.valueOf(currentLocation.getDistanceShort()) + "km");
+            eventPriceIndex.setText(currentLocation.getPriceIndexSymbol());
+
+            // implement buttons
+            Button eventMore = (Button)convertView.findViewById(R.id.preview_event_moreButton);
+            Button eventRoute = (Button)convertView.findViewById(R.id.preview_event_routeButton);
+
+            eventMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openListItemActivity(position);
+                }
+            });
+
+            eventRoute.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Route Button clicked! Item: " + position, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
+        convertView.setClipToOutline(true);
         return convertView;
     }
 
@@ -99,6 +155,44 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
         } else {
             return EVENT;
         }
+    }
+
+    private void openListItemActivity(int position) {
+        Intent intent= new Intent(context, ListItemActivity.class);
+
+        Location currentLocation = locations.get(position);
+        // get common values for passing to the list item activity
+        intent.putExtra("name", currentLocation.getName());
+        intent.putExtra("longDescription", currentLocation.getLongDescription());
+        intent.putExtra("distance", currentLocation.getDistanceShort());
+        intent.putExtra("priceIndex", currentLocation.getPriceIndexSymbol());
+        intent.putExtra("type", currentLocation.getType());
+        intent.putExtra("age", currentLocation.getAge());
+        intent.putExtra("entrance", currentLocation.getEntryFee());
+        intent.putExtra("address", currentLocation.getAddressStreet() + " " + currentLocation.getAddressNr() + ", " +  currentLocation.getAddressPLZ() + " " +  currentLocation.getAddressCity());
+
+        // get individual values for passing to the list item activity
+        intent.putExtra("eventDate", "");
+        intent.putExtra("venueEventName", "");
+        intent.putExtra("openingHours", "");
+
+        if (getItemViewType(position) == VENUE) {
+
+            if (((Venue) currentLocation).getVenueEvents().length == 0) {
+                if (((Venue)currentLocation).getVenueEventByWeekday(dayOfWeek) != null) {
+                    intent.putExtra("venueEventName", ((Venue) currentLocation).getVenueEventByWeekday(dayOfWeek).getVenueEventName());
+                    intent.putExtra("longDescription", ((Venue) currentLocation).getVenueEventByWeekday(dayOfWeek).getLongDescription());
+                }
+            }
+            if (((Venue) currentLocation).getOpeningHours().length == 0) {
+                intent.putExtra("openingHours", ((Venue) currentLocation).getAllOpeningHours());
+            }
+
+        } else {
+            intent.putExtra("eventDate", ((Event) currentLocation).getDate());
+        }
+
+        context.startActivity(intent);
     }
 }
 

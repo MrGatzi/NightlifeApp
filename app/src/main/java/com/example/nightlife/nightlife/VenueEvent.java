@@ -1,29 +1,33 @@
 package com.example.nightlife.nightlife;
 
-import java.util.Date;
-
-public class OpeningHours {
+public class VenueEvent {
 
     private int weekday;
-    private String dopen;
-    private String dclose;
+    private String venueEventName;
+    private String longDescription;
+    private String shortDescription;
 
-    public OpeningHours(int weekday, String dopen, String dclose) {
+    public VenueEvent(int weekday, String venueEventName, String longDescription, String shortDescription) {
         this.weekday = weekday;
-        this.dopen = dopen;
-        this.dclose = dclose;
+        this.venueEventName = venueEventName;
+        this.longDescription = longDescription;
+        this.shortDescription = shortDescription;
     }
 
     public int getWeekday() {
         return weekday;
     }
 
-    public String getDopen() {
-        return dopen;
+    public String getVenueEventName() {
+        return venueEventName;
     }
 
-    public String getDclose() {
-        return dclose;
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
     }
 
     @Override
@@ -57,6 +61,6 @@ public class OpeningHours {
                 break;
         }
 
-        return weekdayDE + ": " + dopen + "-" + dclose;
+        return weekdayDE + ": " + venueEventName;
     }
 }
