@@ -363,7 +363,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mPlace.setPhoneNumber(place.getPhoneNumber().toString());
                 mPlace.setWebsiteUri(place.getWebsiteUri());
 
-                Log.d(TAG, "onResult: place: " + mPlace.toString());
+                Log.d(TAG, "onResult: place: " + mPlace.getName() + " lat/lng: " + mPlace.getLatlng());
             }catch (NullPointerException e){
                 Log.e(TAG, "onResult: NullPointerException: " + e.getMessage() );
             }
@@ -448,12 +448,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         //TODO: for loop über die lat/lngs die ich vom Venue Object bekomme und jeden Marker setzen
 
-        Log.d(TAG, "init: added VenueMarkers to Map");
-        MarkerOptions options = new MarkerOptions()
-                .position(new LatLng(48.511939, 14.505229))
-                .title("Testmarker")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mMap.addMarker(options);
+        String name = "";
+        double lat;
+        double lng;
+
+        MarkerOptions options = new MarkerOptions();
+
+        for(int i = 0; i < locations_name.length; i++) {
+            name = locations_name[i];
+            options.title(name);
+            Log.d(TAG, "addVenueMarkers: Venue name: " + name);
+
+            lat = locations_lat[i];
+            Log.d(TAG, "addVenueMarkers: Venue lat: " + lat);
+
+            lng = locations_long[i];
+            Log.d(TAG, "addVenueMarkers: Venue lng: " + lng);
+
+            options.position(new LatLng(lat, lng));
+            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            mMap.addMarker(options);
+        }
+
+
+
+
+
+
     }
 
 
