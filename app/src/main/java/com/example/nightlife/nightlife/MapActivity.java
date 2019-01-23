@@ -266,12 +266,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "moveCamera: moving the camera to lat: " + latLng.latitude + ". lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
+
+
         if (!title.equals("My Location")) {
             MarkerOptions options = new MarkerOptions()
                     .position(latLng)
                     .title(title);
-            mMap.addMarker(options);
+            mMarker = mMap.addMarker(options);
         }
+
+        hideSoftKeyboard();
     }
 
     //move the camera to inserted location
@@ -304,8 +308,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mSearchText.setAdapter(mPlaceAutocompleteAdapter);
 
-        //Change enter key on keyboard to action (search)
+        //change Enter key to action Search
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //execute our method for searching
+                    geoLocate();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        /*//Change enter key on keyboard to action (search)
+        mSearchText.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE
@@ -316,7 +333,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
                 return false;
             }
-        });
+        });*/
 
         addVenueMarkers();
 
@@ -384,6 +401,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void geoLocate(){
         Log.d(TAG, "geoLocate: geolocating");
 
+        if (mMarker != null) {
+            mMarker.remove();
+        }
+
         String searchString = mSearchText.getText().toString();
 
         Geocoder geocoder = new Geocoder(MapActivity.this);
@@ -443,11 +464,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void addVenueMarkers(){
 
-        //Testmarker um später via den Lat/Lng aus der Datenbank die Marker zu setzen -> PlaceInfo wie bei moveCamera siehe weiter unten für mehr Information?
-        //oder doch in einer extra Klasse so wie in GetNearbyPlacesData?
-
-        //TODO: for loop über die lat/lngs die ich vom Venue Object bekomme und jeden Marker setzen
-
         String name = "";
         double lat;
         double lng;
@@ -469,12 +485,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             mMap.addMarker(options);
         }
-
-
-
-
-
-
     }
 
 
