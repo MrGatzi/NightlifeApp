@@ -89,10 +89,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PlaceInfo mPlace;
     private Marker mMarker;
 
-    //datepicker
-    int year;
-    int month;
-    int dayOfMonth;
+    //variables from MainActivity
+    private int year;
+    private int month;
+    private int dayOfMonth;
 
     //onCreate -> set activity_map layout and get location permissions
     @Override
@@ -226,7 +226,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         try {
             if(mLocationPermissionsGranted){
                 Log.d(TAG, "getDeviceLocation: Location found!");
@@ -311,14 +310,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        //Testmarker um später via den Lat/Lng aus der Datenbank die Marker zu setzen -> PlaceInfo wie bei moveCamera siehe weiter unten für mehr Information?
-        //oder doch in einer extra Klasse so wie in GetNearbyPlacesData?
-        Log.d(TAG, "init: added Testmarker");
-        MarkerOptions options = new MarkerOptions()
-                .position(new LatLng(48.511939, 14.505229))
-                .title("Testmarker")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mMap.addMarker(options);
+        addVenueMarkers();
 
     }
 
@@ -439,5 +431,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void addVenueMarkers(){
+
+        //Testmarker um später via den Lat/Lng aus der Datenbank die Marker zu setzen -> PlaceInfo wie bei moveCamera siehe weiter unten für mehr Information?
+        //oder doch in einer extra Klasse so wie in GetNearbyPlacesData?
+
+        //TODO: for loop über die lat/lngs die ich vom Venue Object bekomme und jeden Marker setzen
+
+        Log.d(TAG, "init: added VenueMarkers to Map");
+        MarkerOptions options = new MarkerOptions()
+                .position(new LatLng(48.511939, 14.505229))
+                .title("Testmarker")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        mMap.addMarker(options);
+    }
+
 
 }
