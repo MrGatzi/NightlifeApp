@@ -89,10 +89,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PlaceInfo mPlace;
     private Marker mMarker;
 
-    //datepicker
-    int year;
-    int month;
-    int dayOfMonth;
+    // datepicker + long, lats from Main Activity
+    private int year;
+    private int month;
+    private int dayOfMonth;
+    private String[] locations_name;
+    private double[] locations_lat;
+    private double[] locations_long;
 
     //onCreate -> set activity_map layout and get location permissions
     @Override
@@ -107,6 +110,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         year = intent.getIntExtra("year", 0);
         month = intent.getIntExtra("month", 0);
         dayOfMonth = intent.getIntExtra("dayOfMonth", 0);
+        locations_name = intent.getStringArrayExtra("names");
+        locations_lat = intent.getDoubleArrayExtra("lats");
+        locations_long = intent.getDoubleArrayExtra("longs");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -129,6 +135,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     case R.id.navigation_list:
                         Intent intent = new Intent(MapActivity.this, MainActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;
                     case R.id.navigation_map:
                         break;
@@ -259,12 +266,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "moveCamera: moving the camera to lat: " + latLng.latitude + ". lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
+
+
         if (!title.equals("My Location")) {
             MarkerOptions options = new MarkerOptions()
                     .position(latLng)
                     .title(title);
-            mMap.addMarker(options);
+            mMarker = mMap.addMarker(options);
         }
+
+        hideSoftKeyboard();
     }
 
     //move the camera to inserted location
@@ -297,8 +308,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mSearchText.setAdapter(mPlaceAutocompleteAdapter);
 
-        //Change enter key on keyboard to action (search)
+        //change Enter key to action Search
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //execute our method for searching
+                    geoLocate();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        /*//Change enter key on keyboard to action (search)
+        mSearchText.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE
@@ -309,16 +333,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
                 return false;
             }
-        });
+        });*/
 
-        //Testmarker um später via den Lat/Lng aus der Datenbank die Marker zu setzen -> PlaceInfo wie bei moveCamera siehe weiter unten für mehr Information?
-        //oder doch in einer extra Klasse so wie in GetNearbyPlacesData?
-        Log.d(TAG, "init: added Testmarker");
-        MarkerOptions options = new MarkerOptions()
-                .position(new LatLng(48.511939, 14.505229))
-                .title("Testmarker")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        mMap.addMarker(options);
+        addVenueMarkers();
 
     }
 
@@ -363,7 +380,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mPlace.setPhoneNumber(place.getPhoneNumber().toString());
                 mPlace.setWebsiteUri(place.getWebsiteUri());
 
-                Log.d(TAG, "onResult: place: " + mPlace.toString());
+                Log.d(TAG, "onResult: place: " + mPlace.getName() + " lat/lng: " + mPlace.getLatlng());
             }catch (NullPointerException e){
                 Log.e(TAG, "onResult: NullPointerException: " + e.getMessage() );
             }
@@ -383,6 +400,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //search for the inserted location in the searchbar and move the camera to its position
     private void geoLocate(){
         Log.d(TAG, "geoLocate: geolocating");
+
+        if (mMarker != null) {
+            mMarker.remove();
+        }
 
         String searchString = mSearchText.getText().toString();
 
@@ -424,6 +445,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case R.id.filter:
                 Intent intent = new Intent(MapActivity.this, FilterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.calendar:
 
@@ -439,5 +461,31 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void addVenueMarkers(){
+
+        String name = "";
+        double lat;
+        double lng;
+
+        MarkerOptions options = new MarkerOptions();
+
+        for(int i = 0; i < locations_name.length; i++) {
+            name = locations_name[i];
+            options.title(name);
+            Log.d(TAG, "addVenueMarkers: Venue name: " + name);
+
+            lat = locations_lat[i];
+            Log.d(TAG, "addVenueMarkers: Venue lat: " + lat);
+
+            lng = locations_long[i];
+            Log.d(TAG, "addVenueMarkers: Venue lng: " + lng);
+
+            options.position(new LatLng(lat, lng));
+            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            mMap.addMarker(options);
+        }
+    }
+
 
 }

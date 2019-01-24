@@ -63,6 +63,46 @@ public class FilterActivity extends AppCompatActivity {
                 onPause();
             }
         });
+
+        CompoundButton.OnCheckedChangeListener behaviour = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean dirty = false;
+
+                if (isChecked){
+                    if (buttonView == filter2_poor) {
+                        filter2_poor.setChecked(true);
+                    } else if (buttonView == filter2_medium) {
+                        filter2_poor.setChecked(true);
+                        filter2_medium.setChecked(true);
+                    } else if (buttonView == filter2_rich) {
+                        filter2_poor.setChecked(true);
+                        filter2_medium.setChecked(true);
+                        filter2_rich.setChecked(true);
+                    }
+
+                    if (buttonView == filter3_near) {
+                        filter3_near.setChecked(true);
+                    } else if (buttonView == filter3_medium) {
+                        filter3_near.setChecked(true);
+                        filter3_medium.setChecked(true);
+                    } else if (buttonView == filter3_far) {
+                        filter3_near.setChecked(true);
+                        filter3_medium.setChecked(true);
+                        filter3_far.setChecked(true);
+                    }
+                }
+            }
+        };
+
+        // change button behaviour for filter2 & filter3 buttons
+        filter2_poor.setOnCheckedChangeListener(behaviour);
+        filter2_medium.setOnCheckedChangeListener(behaviour);
+        filter2_rich.setOnCheckedChangeListener(behaviour);
+        filter3_near.setOnCheckedChangeListener(behaviour);
+        filter3_medium.setOnCheckedChangeListener(behaviour);
+        filter3_far.setOnCheckedChangeListener(behaviour);
+
     }
 
     @Override
@@ -80,6 +120,8 @@ public class FilterActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
+        Toast.makeText(this, "onPause() FilterActivity", Toast.LENGTH_SHORT).show();
+
         states.putBoolean("state_filter1_disco", filter1_disco.isChecked());
         states.putBoolean("state_filter1_bar", filter1_bar.isChecked());
         states.putBoolean("state_filter1_event", filter1_event.isChecked());
@@ -95,11 +137,14 @@ public class FilterActivity extends AppCompatActivity {
         Intent intent_filter = new Intent(FilterActivity.this, MainActivity.class);
         intent_filter.putExtras(states);
         startActivity(intent_filter);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Toast.makeText(this, "onResume() FilterActivity", Toast.LENGTH_SHORT).show();
+
         filter1_disco.setChecked(states.getBoolean("state_filter1_disco",false));
         filter1_bar.setChecked(states.getBoolean("state_filter1_bar",false));
         filter1_event.setChecked(states.getBoolean("state_filter1_event",false));

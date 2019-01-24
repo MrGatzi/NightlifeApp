@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -62,7 +63,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private RequestQueue queue;
     private ArrayList<Location> locations = new ArrayList<Location>();
+    private ArrayList<Location> locations_filtered = new ArrayList<>();
     private ListView previewList;
+    private PreviewListAdapter previewListAdapter;
+
+    // data for map activity
+    private String[] locations_name;
+    private double[] locations_lat;
+    private double[] locations_long;
 
     // global date (default: today) with calendar
     Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -98,7 +106,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             intent.putExtra("year", year);
                             intent.putExtra("month", month);
                             intent.putExtra("dayOfMonth", dayOfMonth);
+                            intent.putExtra("names", locations_name);
+                            intent.putExtra("lats", locations_lat);
+                            intent.putExtra("longs", locations_long);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             onStop();
                             break;
                     }
@@ -119,31 +131,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 LAT_LNG_BOUNDS, null);
 
         mSearchText.setAdapter(mPlaceAutocompleteAdapter);
-
-        previewList = (ListView)findViewById(R.id.list_previewList);
-        final PreviewListAdapter previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
-        previewList.setAdapter(previewListAdapter);
-        Log.i("ListAdapterTest", "Elements in Adapter: " + previewListAdapter.getCount());
-
-        queue = Volley.newRequestQueue(this);
-        jsonParse();
-        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<JSONObject>() {
-            @Override
-            public void onRequestFinished(Request<JSONObject> request) {
-                previewListAdapter.notifyDataSetChanged();
-            }
-        });
-        Log.i("ListAdapterTest", "Locations after Json Parse: " + locations.size());
-
-
     }
 
 
 
     private void jsonParse() {
-
-
-
         // String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/0/0";
         String url ="http://nightlifeapi.projekte.fh-hagenberg.at/laravel/public/api/location/48.373027/14.516546";
 
@@ -287,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.filter:
                 Intent intent = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onStop();
                 break;
             case R.id.calendar:
@@ -333,36 +326,121 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
 
-        ArrayList<Location> locations_filtered = locations;
-        boolean filter1_disco;
-        boolean filter1_bar;
-        boolean filter1_event;
+        locations.clear();
+        locations_filtered.clear();
 
-        Intent intent = getIntent();
+        // get data from database
+        previewList = (ListView)findViewById(R.id.list_previewList);
+        previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
+        previewList.setAdapter(previewListAdapter);
+        Log.i("ListAdapterTest", "Elements in Adapter: " + previewListAdapter.getCount());
 
-        // check if the intent is null (user never set a filter and no extras had been put in filter activity)
-        if (intent != null){
-            filter1_disco = intent.getBooleanExtra("state_filter1_disco", true);
-            filter1_bar = intent.getBooleanExtra("state_filter1_bar", true);
-            filter1_event = intent.getBooleanExtra("state_filter1_event", true);
+        queue = Volley.newRequestQueue(this);
+        jsonParse();
+        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<JSONObject>() {
+            @Override
+            public void onRequestFinished(Request<JSONObject> request) {
+                previewListAdapter.notifyDataSetChanged();
+            }
+        });
 
-            // if one of the filter1 buttons is active > filter them
-            if (filter1_disco || filter1_bar || filter1_event) {
-                // delete all objects with type "Diskothek"
-                if (filter1_disco == false) {
+        // set data for map activity
+        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<JSONObject>() {
+            @Override
+            public void onRequestFinished(Request<JSONObject> request) {
+                Intent intent = getIntent();
+                Toast.makeText(MainActivity.this, "onResume() Intent" + intent.toString(), Toast.LENGTH_SHORT).show();
 
+                // check if the intent is null (user never set a filter and no extras had been put in filter activity)
+                if (intent.getExtras() != null){
+                    Toast.makeText(MainActivity.this, "Intent != null", Toast.LENGTH_SHORT).show();
+
+                    boolean filter1_disco = intent.getBooleanExtra("state_filter1_disco", false);
+                    boolean filter1_bar = intent.getBooleanExtra("state_filter1_bar", false);
+                    boolean filter1_event = intent.getBooleanExtra("state_filter1_event", false);
+
+                    boolean filter2_poor = intent.getBooleanExtra("state_filter2_poor", false);
+                    boolean filter2_medium = intent.getBooleanExtra("state_filter2_medium", false);
+                    boolean filter2_rich = intent.getBooleanExtra("state_filter2_rich", false);
+
+                    boolean filter3_near = intent.getBooleanExtra("state_filter3_near", false);
+                    boolean filter3_medium = intent.getBooleanExtra("state_filter3_medium", false);
+                    boolean filter3_far = intent.getBooleanExtra("state_filter3_far", false);
+
+                    // if one of the filter1 buttons is active > filter them
+                    if (filter1_disco || filter1_bar || filter1_event) {
+                        for (int i = 0; i < locations.size(); i++) {
+                            if (!filter1_disco && locations.get(i).getType().equals("Diskothek")) {
+                                locations.get(i).setVisible(false);
+                            } else if (!filter1_bar && locations.get(i).getType().equals("Bar") || locations.get(i).getType().equals("Pub")) {
+                                locations.get(i).setVisible(false);
+                            } else if (!filter1_event && locations.get(i).getType().equals("Event")) {
+                                locations.get(i).setVisible(false);
+                            }
+                        }
+                    }
+
+                    // if one of the filter2 buttons is active > filter them
+                    if (filter2_poor || filter2_medium || filter2_rich) {
+                        for (int i = 0; i < locations.size(); i++) {
+                            if (!filter2_poor && locations.get(i).getPriceIndex() == 1) {
+                                locations.get(i).setVisible(false);
+                            } else if (!filter2_medium && locations.get(i).getPriceIndex() == 2) {
+                                locations.get(i).setVisible(false);
+                            } else if (!filter2_rich && locations.get(i).getPriceIndex() == 3) {
+                                locations.get(i).setVisible(false);
+                            }
+                        }
+                    }
+
+                    // if one of the filter3 buttons is active > filter them
+                    if (filter3_near || filter3_medium || filter3_far) {
+                        for (int i = 0; i < locations.size(); i++) {
+                            if (!filter3_near && locations.get(i).getDistance() <= 5) {
+                                locations.get(i).setVisible(false);
+                            } else if (!filter3_medium && locations.get(i).getDistance() > 5 && locations.get(i).getDistance() <= 20){
+                                locations.get(i).setVisible(false);
+                            } else if (!filter3_far && locations.get(i).getDistance() > 20) {
+                                locations.get(i).setVisible(false);
+                            }
+                        }
+                    }
+
+                    // get all visible locations
+                    for (int i = 0; i < locations.size(); i++){
+                        if (locations.get(i).isVisible()) {
+                            locations_filtered.add(locations.get(i));
+                        }
+                    }
+
+                    ((PreviewListAdapter) previewList.getAdapter()).update(locations_filtered);
                 }
 
-                // delete all objects with type "Bar" oder "Pub
-                if (filter1_bar == false) {
+                // data for map activity
+                if (locations_filtered.size() != 0) {
+                    int size = locations_filtered.size();
+                    locations_name = new String[size];
+                    locations_lat = new double[size];
+                    locations_long = new double[size];
 
-                }
+                    for (int i = 0; i < size; i++){
+                        locations_name[i] = locations_filtered.get(i).getName();
+                        locations_lat[i] = locations_filtered.get(i).getLocLat();
+                        locations_long[i] = locations_filtered.get(i).getLocLong();
+                    }
+                } else {
+                    int size = locations.size();
+                    locations_name = new String[size];
+                    locations_lat = new double[size];
+                    locations_long = new double[size];
 
-                // delete all objects with type "Event"
-                if (filter1_event == false) {
-
+                    for (int i = 0; i < size; i++){
+                        locations_name[i] = locations.get(i).getName();
+                        locations_lat[i] = locations.get(i).getLocLat();
+                        locations_long[i] = locations.get(i).getLocLong();
+                    }
                 }
             }
-        }
+        });
     }
 }
