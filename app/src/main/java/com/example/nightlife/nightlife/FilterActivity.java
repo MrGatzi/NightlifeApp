@@ -21,6 +21,9 @@ public class FilterActivity extends AppCompatActivity {
     // save states in bundle
     private static Bundle states = new Bundle();
 
+    // previous activity
+    private String previous_activity;
+
     // buttons
     private ToggleButton filter1_disco;
     private ToggleButton filter1_bar;
@@ -38,6 +41,8 @@ public class FilterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+
+        previous_activity = getIntent().getStringExtra("ActivityName");
 
         Toolbar toolbar = findViewById(R.id.toolbar_filter);
         setSupportActionBar(toolbar);
@@ -60,15 +65,13 @@ public class FilterActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPause();
+                finish();
             }
         });
 
         CompoundButton.OnCheckedChangeListener behaviour = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                boolean dirty = false;
-
                 if (isChecked){
                     if (buttonView == filter2_poor) {
                         filter2_poor.setChecked(true);
@@ -110,7 +113,7 @@ public class FilterActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            this.finish();
+            this.onPause();
         }
 
         return super.onOptionsItemSelected(item);
@@ -134,9 +137,10 @@ public class FilterActivity extends AppCompatActivity {
         states.putBoolean("state_filter3_medium", filter3_medium.isChecked());
         states.putBoolean("state_filter3_far", filter3_far.isChecked());
 
-        Intent intent_filter = new Intent(FilterActivity.this, MainActivity.class);
+        Intent intent_filter = new Intent();
         intent_filter.putExtras(states);
-        startActivity(intent_filter);
+        setResult(RESULT_OK, intent_filter);
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
