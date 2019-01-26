@@ -50,7 +50,7 @@
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_type"
         app:layout_constraintStart_toEndOf="@+id/location_content_facts_routeButton"
-        app:srcCompat="@drawable/icon_cocktail" />
+        app:srcCompat="@drawable/ic_bar_pub" />
 
     <TextView
         android:id="@+id/location_content_facts_type"
@@ -75,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_age"
         app:layout_constraintStart_toStartOf="@+id/location_content_facts_typeIcon"
         app:layout_constraintTop_toTopOf="@+id/location_content_facts_age"
-        app:srcCompat="@drawable/icon_cocktail" />
+        app:srcCompat="@drawable/ic_age" />
 
     <TextView
         android:id="@+id/location_content_facts_age"
@@ -101,7 +101,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/location_content_facts_entrance"
         app:layout_constraintStart_toStartOf="@+id/location_content_facts_typeIcon"
         app:layout_constraintTop_toTopOf="@+id/location_content_facts_entrance"
-        app:srcCompat="@drawable/icon_cocktail" />
+        app:srcCompat="@drawable/ic_price_entry" />
 
     <TextView
         android:id="@+id/location_content_facts_entrance"
