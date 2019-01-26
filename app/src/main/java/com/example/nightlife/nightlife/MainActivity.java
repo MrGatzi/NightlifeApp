@@ -67,11 +67,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private ListView previewList;
     private PreviewListAdapter previewListAdapter;
 
-    // data for map activity
-    private String[] locations_name;
-    private double[] locations_lat;
-    private double[] locations_long;
-
     // global date (default: today) with calendar
     Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
     int year = calendar.get(Calendar.YEAR);
@@ -80,6 +75,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     // weekday (in English: "Monday", …)
     int dayOfWeek = getWeekdayInt(calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
 
+    // filter
+    boolean filter_active;
+    boolean filter1_disco;
+    boolean filter1_bar;
+    boolean filter1_event;
+    boolean filter2_poor;
+    boolean filter2_medium;
+    boolean filter2_rich;
+    boolean filter3_near;
+    boolean filter3_medium;
+    boolean filter3_far;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -87,6 +94,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_main);
 
         mSearchText = (AutoCompleteTextView) findViewById(R.id.searchbar);
+
+        filter_active = false;
+        filter1_disco = false;
+        filter1_bar = false;
+        filter1_event = false;
+        filter2_poor = false;
+        filter2_medium = false;
+        filter2_rich = false;
+        filter3_near = false;
+        filter3_medium = false;
+        filter3_far = false;
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,12 +121,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             break;
                         case R.id.navigation_map:
                             Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                            intent.putExtra("state_filter1_disco", filter1_disco);
+                            intent.putExtra("state_filter1_bar", filter1_bar);
+                            intent.putExtra("state_filter1_event", filter1_event);
+
+                            intent.putExtra("state_filter2_poor", filter2_poor);
+                            intent.putExtra("state_filter2_medium", filter2_medium);
+                            intent.putExtra("state_filter2_rich", filter2_rich);
+
+                            intent.putExtra("state_filter3_near", filter3_near);
+                            intent.putExtra("state_filter3_medium", filter3_medium);
+                            intent.putExtra("state_filter3_far", filter3_far);
+
                             intent.putExtra("year", year);
                             intent.putExtra("month", month);
                             intent.putExtra("dayOfMonth", dayOfMonth);
-                            intent.putExtra("names", locations_name);
-                            intent.putExtra("lats", locations_lat);
-                            intent.putExtra("longs", locations_long);
+                            intent.putExtra("dayOfWeek", dayOfWeek);
+
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             onStop();
@@ -278,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case R.id.filter:
                 Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 111);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 onStop();
                 break;
@@ -326,6 +355,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
 
+        Intent intent = getIntent();
+        if (intent.getExtras() != null && !filter_active) {
+            filter1_disco = intent.getBooleanExtra("state_filter1_disco", false);
+            filter1_bar = intent.getBooleanExtra("state_filter1_bar", false);
+            filter1_event = intent.getBooleanExtra("state_filter1_event", false);
+
+            filter2_poor = intent.getBooleanExtra("state_filter2_poor", false);
+            filter2_medium = intent.getBooleanExtra("state_filter2_medium", false);
+            filter2_rich = intent.getBooleanExtra("state_filter2_rich", false);
+
+            filter3_near = intent.getBooleanExtra("state_filter3_near", false);
+            filter3_medium = intent.getBooleanExtra("state_filter3_medium", false);
+            filter3_far = intent.getBooleanExtra("state_filter3_far", false);
+        }
+
         locations.clear();
         locations_filtered.clear();
 
@@ -348,31 +392,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<JSONObject>() {
             @Override
             public void onRequestFinished(Request<JSONObject> request) {
-                Intent intent = getIntent();
-                Toast.makeText(MainActivity.this, "onResume() Intent" + intent.toString(), Toast.LENGTH_SHORT).show();
 
                 // check if the intent is null (user never set a filter and no extras had been put in filter activity)
-                if (intent.getExtras() != null){
-                    Toast.makeText(MainActivity.this, "Intent != null", Toast.LENGTH_SHORT).show();
-
-                    boolean filter1_disco = intent.getBooleanExtra("state_filter1_disco", false);
-                    boolean filter1_bar = intent.getBooleanExtra("state_filter1_bar", false);
-                    boolean filter1_event = intent.getBooleanExtra("state_filter1_event", false);
-
-                    boolean filter2_poor = intent.getBooleanExtra("state_filter2_poor", false);
-                    boolean filter2_medium = intent.getBooleanExtra("state_filter2_medium", false);
-                    boolean filter2_rich = intent.getBooleanExtra("state_filter2_rich", false);
-
-                    boolean filter3_near = intent.getBooleanExtra("state_filter3_near", false);
-                    boolean filter3_medium = intent.getBooleanExtra("state_filter3_medium", false);
-                    boolean filter3_far = intent.getBooleanExtra("state_filter3_far", false);
-
+                if (filter1_disco || filter1_bar || filter1_event || filter2_poor || filter2_medium || filter2_rich || filter3_near || filter3_medium || filter3_far){
                     // if one of the filter1 buttons is active > filter them
                     if (filter1_disco || filter1_bar || filter1_event) {
                         for (int i = 0; i < locations.size(); i++) {
                             if (!filter1_disco && locations.get(i).getType().equals("Diskothek")) {
                                 locations.get(i).setVisible(false);
-                            } else if (!filter1_bar && locations.get(i).getType().equals("Bar") || locations.get(i).getType().equals("Pub")) {
+                            } else if ((!filter1_bar && locations.get(i).getType().equals("Bar")) || (!filter1_bar && locations.get(i).getType().equals("Pub"))) {
                                 locations.get(i).setVisible(false);
                             } else if (!filter1_event && locations.get(i).getType().equals("Event")) {
                                 locations.get(i).setVisible(false);
@@ -405,42 +433,43 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             }
                         }
                     }
-
-                    // get all visible locations
-                    for (int i = 0; i < locations.size(); i++){
-                        if (locations.get(i).isVisible()) {
-                            locations_filtered.add(locations.get(i));
-                        }
+                }
+                // get all visible locations
+                for (int i = 0; i < locations.size(); i++){
+                    if (locations.get(i).isVisible()) {
+                        locations_filtered.add(locations.get(i));
                     }
-
-                    ((PreviewListAdapter) previewList.getAdapter()).update(locations_filtered);
                 }
 
-                // data for map activity
-                if (locations_filtered.size() != 0) {
-                    int size = locations_filtered.size();
-                    locations_name = new String[size];
-                    locations_lat = new double[size];
-                    locations_long = new double[size];
-
-                    for (int i = 0; i < size; i++){
-                        locations_name[i] = locations_filtered.get(i).getName();
-                        locations_lat[i] = locations_filtered.get(i).getLocLat();
-                        locations_long[i] = locations_filtered.get(i).getLocLong();
-                    }
-                } else {
-                    int size = locations.size();
-                    locations_name = new String[size];
-                    locations_lat = new double[size];
-                    locations_long = new double[size];
-
-                    for (int i = 0; i < size; i++){
-                        locations_name[i] = locations.get(i).getName();
-                        locations_lat[i] = locations.get(i).getLocLat();
-                        locations_long[i] = locations.get(i).getLocLong();
-                    }
-                }
+                ((PreviewListAdapter) previewList.getAdapter()).update(locations_filtered);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        filter_active = false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 111 && resultCode == RESULT_OK && data != null) {
+            if (data.getExtras() != null) {
+                filter_active = true;
+
+                filter1_disco = data.getBooleanExtra("state_filter1_disco", false);
+                filter1_bar = data.getBooleanExtra("state_filter1_bar", false);
+                filter1_event = data.getBooleanExtra("state_filter1_event", false);
+
+                filter2_poor = data.getBooleanExtra("state_filter2_poor", false);
+                filter2_medium = data.getBooleanExtra("state_filter2_medium", false);
+                filter2_rich = data.getBooleanExtra("state_filter2_rich", false);
+
+                filter3_near = data.getBooleanExtra("state_filter3_near", false);
+                filter3_medium = data.getBooleanExtra("state_filter3_medium", false);
+                filter3_far = data.getBooleanExtra("state_filter3_far", false);
+            }
+        }
     }
 }
