@@ -57,6 +57,6 @@ public class OpeningHours {
                 break;
         }
 
-        return weekdayDE + ": " + dopen + "-" + dclose;
+        return weekdayDE + ": " + dopen.substring(0, 5) + "-" + dclose.substring(0, 5);
     }
 }

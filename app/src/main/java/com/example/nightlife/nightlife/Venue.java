@@ -29,11 +29,12 @@ public class Venue extends Location {
     }
 
     public String getAllVenueEvents() {
-        StringBuilder venueEventsString = new StringBuilder();
+        StringBuilder ves = new StringBuilder();
         for (int i = 0; i < venueEvents.length; i++) {
-            venueEventsString.append(venueEvents[i].toString());
+            ves.append(venueEvents[i].toString());
+            ves.append("\n");
         }
-        return venueEventsString.toString();
+        return ves.toString();
     }
 
     public String getOpeningHoursByWeekday(int weekday) {
@@ -49,6 +50,7 @@ public class Venue extends Location {
         StringBuilder ohs = new StringBuilder();
         for (int i = 0; i < openingHours.length; i++) {
             ohs.append(openingHours[i].toString());
+            ohs.append("\n");
         }
         return ohs.toString();
     }

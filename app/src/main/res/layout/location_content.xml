@@ -7,11 +7,26 @@
     android:background="@drawable/round_outline">
 
     <TextView
-        android:id="@+id/location_content_longDescription"
-        android:layout_width="0dp"
+        android:id="@+id/location_content_venueEvents"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginEnd="8dp"
+        android:text="VenueEvents"
+        android:textAppearance="@style/H3"
+        android:textColor="@color/orangeAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_content_openingHours" />
+
+    <TextView
+        android:id="@+id/location_content_longDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="18dp"
         android:text="Hier wird später eine ausführliche Beschreibung des Events stehen. Hier wird später eine ausführliche Beschreibung des Events stehen.
 \nHier wird später eine ausführliche Beschreibung des Events stehen. Hier wird später eine ausführliche Beschreibung des Events stehen. Hier wird später eine ausführliche Beschreibung des Events stehen."
@@ -45,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/location_content_divider" />
 
     <ImageView
-        android:id="@+id/location_content_openingHoursIcon"
+        android:id="@+id/location_content_addressIcon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="18dp"
@@ -53,40 +68,8 @@
         android:cropToPadding="false"
         android:scaleType="centerInside"
         android:tint="@color/grey"
-        app:layout_constraintBottom_toBottomOf="@+id/location_content_openingHours"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/location_content_openingHours"
-        app:srcCompat="@drawable/icon_cocktail" />
-
-    <TextView
-        android:id="@+id/location_content_openingHours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="8dp"
-        android:text="Di-Do 18:00-02:00, Fr-So 19:00-04:00"
-        android:textAppearance="@style/P"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/location_content_openingHoursIcon"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/location_content_addressIcon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:adjustViewBounds="false"
-        android:cropToPadding="false"
-        android:scaleType="centerInside"
-        android:tint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/location_content_address"
-        app:layout_constraintStart_toStartOf="@+id/location_content_openingHoursIcon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/location_content_address"
         app:srcCompat="@drawable/icon_cocktail" />
 
@@ -95,9 +78,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="26dp"
         android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginBottom="26dp"
         android:text="Softwarepark 105\n4232 Hagenberg im Mühlkreis"
         android:textAppearance="@style/P"
         android:textColor="@color/grey"
@@ -106,7 +89,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/location_content_addressIcon"
-        app:layout_constraintTop_toBottomOf="@+id/location_content_openingHours"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/location_content_openingHoursIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="centerInside"
+        android:tint="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@+id/location_content_openingHours"
+        app:layout_constraintStart_toStartOf="@+id/location_content_addressIcon"
+        app:layout_constraintTop_toTopOf="@+id/location_content_openingHours"
+        app:srcCompat="@drawable/icon_cocktail" />
+
+    <TextView
+        android:id="@+id/location_content_openingHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="18dp"
+        android:text="Di-Do 18:00-02:00, Fr-So 19:00-04:00"
+        android:textAppearance="@style/P"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/location_content_openingHoursIcon"
+        app:layout_constraintTop_toBottomOf="@+id/location_content_address"
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

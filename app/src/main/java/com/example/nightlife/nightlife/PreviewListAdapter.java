@@ -28,13 +28,15 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
 
     private ArrayList<Location> locations = null;
     int dayOfWeek;
+    boolean[] filter;
 
-    public PreviewListAdapter(@NonNull Context context, int resource, ArrayList<Location> locations, int dayOfWeek) {
+    public PreviewListAdapter(@NonNull Context context, int resource, ArrayList<Location> locations, int dayOfWeek, boolean[] filter) {
         super(context, resource, locations);
         this.context = context;
         this.resource = resource;
         this.locations = locations;
         this.dayOfWeek = dayOfWeek;
+        this.filter = filter;
     }
 
     public void update(ArrayList<Location> locations_filtered) {
@@ -74,6 +76,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             // set values with the current location data
             venueImage.setImageResource(R.drawable.pub);
             venueName.setText(currentLocation.getName());
+            venueEventName.setText("");
             venueShortDescription.setText(currentLocation.getShortDescription());
             venueKm.setText(String.valueOf(currentLocation.getDistanceShort()) + "km");
             venuePriceIndex.setText(currentLocation.getPriceIndexSymbol());
@@ -166,6 +169,16 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
     private void openListItemActivity(int position) {
         Intent intent= new Intent(context, ListItemActivity.class);
 
+        intent.putExtra("state_filter1_disco", filter[0]);
+        intent.putExtra("state_filter1_bar", filter[1]);
+        intent.putExtra("state_filter1_event", filter[2]);
+        intent.putExtra("state_filter2_poor", filter[3]);
+        intent.putExtra("state_filter2_medium", filter[4]);
+        intent.putExtra("state_filter2_rich", filter[5]);
+        intent.putExtra("state_filter3_near", filter[6]);
+        intent.putExtra("state_filter3_medium", filter[7]);
+        intent.putExtra("state_filter3_far", filter[8]);
+
         Location currentLocation = locations.get(position);
         // get common values for passing to the list item activity
         intent.putExtra("name", currentLocation.getName());
@@ -179,21 +192,21 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
 
         // get individual values for passing to the list item activity
         intent.putExtra("eventDate", "");
+        intent.putExtra("venueEvents", "");
         intent.putExtra("venueEventName", "");
         intent.putExtra("openingHours", "");
 
         if (getItemViewType(position) == VENUE) {
-
-            if (((Venue) currentLocation).getVenueEvents().length == 0) {
+            if (((Venue) currentLocation).getVenueEvents().length != 0) {
+                intent.putExtra("venueEvents", ((Venue) currentLocation).getAllVenueEvents());
                 if (((Venue)currentLocation).getVenueEventByWeekday(dayOfWeek) != null) {
                     intent.putExtra("venueEventName", ((Venue) currentLocation).getVenueEventByWeekday(dayOfWeek).getVenueEventName());
                     intent.putExtra("longDescription", ((Venue) currentLocation).getVenueEventByWeekday(dayOfWeek).getLongDescription());
                 }
             }
-            if (((Venue) currentLocation).getOpeningHours().length == 0) {
+            if (((Venue) currentLocation).getOpeningHours().length != 0) {
                 intent.putExtra("openingHours", ((Venue) currentLocation).getAllOpeningHours());
             }
-
         } else {
             intent.putExtra("eventDate", ((Event) currentLocation).getDate());
         }

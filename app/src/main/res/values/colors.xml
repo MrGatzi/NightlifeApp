@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="pink">#EA79E5</color>
-    <color name="pinkAccent">#DA0DD1</color>
+    <color name="pinkAccent">#da0dd1</color>
     <color name="orange">#FFC357</color>
-    <color name="orangeAccent">#FFA401</color>
+    <color name="orangeAccent">#ffa401</color>
     <color name="violetBright">#A693F7</color>
     <color name="violetAccent">#6C00FF</color>
     <color name="violet">#5822B1</color>

@@ -61,6 +61,6 @@ public class VenueEvent {
                 break;
         }
 
-        return weekdayDE + ": " + venueEventName;
+        return venueEventName + " (" + weekdayDE + ")";
     }
 }

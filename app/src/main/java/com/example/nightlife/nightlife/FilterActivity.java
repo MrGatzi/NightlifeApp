@@ -123,8 +123,6 @@ public class FilterActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(this, "onPause() FilterActivity", Toast.LENGTH_SHORT).show();
-
         states.putBoolean("state_filter1_disco", filter1_disco.isChecked());
         states.putBoolean("state_filter1_bar", filter1_bar.isChecked());
         states.putBoolean("state_filter1_event", filter1_event.isChecked());
@@ -147,8 +145,6 @@ public class FilterActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(this, "onResume() FilterActivity", Toast.LENGTH_SHORT).show();
-
         filter1_disco.setChecked(states.getBoolean("state_filter1_disco",false));
         filter1_bar.setChecked(states.getBoolean("state_filter1_bar",false));
         filter1_event.setChecked(states.getBoolean("state_filter1_event",false));
