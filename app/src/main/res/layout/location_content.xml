@@ -71,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/location_content_address"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/location_content_address"
-        app:srcCompat="@drawable/icon_cocktail" />
+        app:srcCompat="@drawable/ic_location" />
 
     <TextView
         android:id="@+id/location_content_address"
@@ -99,11 +99,10 @@
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         android:scaleType="centerInside"
-        android:tint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/location_content_openingHours"
         app:layout_constraintStart_toStartOf="@+id/location_content_addressIcon"
         app:layout_constraintTop_toTopOf="@+id/location_content_openingHours"
-        app:srcCompat="@drawable/icon_cocktail" />
+        app:srcCompat="@drawable/ic_clock" />
 
     <TextView
         android:id="@+id/location_content_openingHours"

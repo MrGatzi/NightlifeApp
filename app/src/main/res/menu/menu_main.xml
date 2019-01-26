@@ -19,13 +19,13 @@
 
     <item
         android:id="@+id/calendar"
-        android:icon="@drawable/icon_calendar"
+        android:icon="@drawable/ic_calender"
         android:title=""
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/filter"
-        android:icon="@drawable/icon_filter"
+        android:icon="@drawable/ic_filter"
         android:title=""
         app:showAsAction="ifRoom" />
 
