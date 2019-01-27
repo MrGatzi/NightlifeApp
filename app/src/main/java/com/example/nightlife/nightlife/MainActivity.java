@@ -375,7 +375,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         // get data from database
         previewList = (ListView)findViewById(R.id.list_previewList);
-        previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek);
+        boolean[] filter = {filter1_disco, filter1_bar, filter1_event, filter2_poor, filter2_medium, filter2_rich, filter3_near, filter3_medium, filter3_far};
+        previewListAdapter = new PreviewListAdapter(getApplicationContext(), R.layout.preview_venue, locations, dayOfWeek, filter);
         previewList.setAdapter(previewListAdapter);
         Log.i("ListAdapterTest", "Elements in Adapter: " + previewListAdapter.getCount());
 
