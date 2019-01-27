@@ -36,6 +36,7 @@ public class ListItemActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(intent.getStringExtra("name"));
 
         // get each view of the location layout
+        ImageView locationImage = findViewById(R.id.location_image);
         TextView locationName = findViewById(R.id.location_name);
         TextView eventDate = findViewById(R.id.location_eventDate);
         TextView venueEventName = findViewById(R.id.location_venueEventName);
@@ -71,6 +72,12 @@ public class ListItemActivity extends AppCompatActivity {
             ((ViewGroup) venueEvents.getParent()).removeView(venueEvents);
         }
 
+        if (intent.getIntExtra("venueID", 0) != 0) {
+            setVenueImages(locationImage, intent.getIntExtra("venueID", 0));
+        } else if (intent.getIntExtra("eventID", 0) != 0) {
+            setEventImages(locationImage, intent.getIntExtra("eventID", 0));
+        }
+
         filter1_disco = intent.getBooleanExtra("state_filter1_disco", false);
         filter1_bar = intent.getBooleanExtra("state_filter1_bar", false);
         filter1_event = intent.getBooleanExtra("state_filter1_event", false);
@@ -80,6 +87,8 @@ public class ListItemActivity extends AppCompatActivity {
         filter3_near = intent.getBooleanExtra("state_filter3_near", false);
         filter3_medium = intent.getBooleanExtra("state_filter3_medium", false);
         filter3_far = intent.getBooleanExtra("state_filter3_far", false);
+
+
     }
 
     @Override
@@ -102,5 +111,66 @@ public class ListItemActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean setVenueImages(ImageView view, int id) {
+        switch (id) {
+            case 5:
+                view.setImageResource(R.drawable.partymaus);
+                return true;
+            case 6:
+                view.setImageResource(R.drawable.sailors);
+                return true;
+            case 7:
+                view.setImageResource(R.drawable.local_buehne);
+                return true;
+            case 8:
+                view.setImageResource(R.drawable.lennox);
+                return true;
+            case 9:
+                view.setImageResource(R.drawable.turmstadl);
+                return true;
+            case 10:
+                view.setImageResource(R.drawable.musikparka1);
+                return true;
+            case 11:
+                view.setImageResource(R.drawable.evers);
+                return true;
+            case 12:
+                view.setImageResource(R.drawable.latino);
+                return true;
+            case 13:
+                view.setImageResource(R.drawable.schlag);
+                return true;
+            case 14:
+                view.setImageResource(R.drawable.rockford);
+                return true;
+            case 15:
+                view.setImageResource(R.drawable.pub_hagenberg);
+                return true;
+            case 16:
+                view.setImageResource(R.drawable.cafe_monika);
+                return true;
+            default:
+                view.setImageResource(R.drawable.pub);
+                return true;
+        }
+    }
+
+    public boolean setEventImages(ImageView view, int id) {
+        switch (id) {
+            case 1:
+                view.setImageResource(R.drawable.poetry_slam);
+                return true;
+            case 2:
+                view.setImageResource(R.drawable.lennox_jahresfeier);
+                return true;
+            case 3:
+                view.setImageResource(R.drawable.lennox_jahresfeier);
+                return true;
+            default:
+                view.setImageResource(R.drawable.party);
+                return true;
+        }
     }
 }

@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/location_name"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginBottom="15dp"
@@ -39,6 +39,7 @@
         android:layout_marginBottom="18dp"
         android:text="Heute"
         android:textAppearance="@style/H4"
+        android:textColor="@color/orangeAccent"
         app:layout_constraintBottom_toBottomOf="@+id/location_image"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -39,6 +39,7 @@
         android:layout_marginBottom="15dp"
         android:text="Heute"
         android:textAppearance="@style/H4"
+        android:textColor="@color/orangeAccent"
         app:layout_constraintBottom_toBottomOf="@+id/preview_event_eventImage"
         app:layout_constraintEnd_toEndOf="parent" />
 

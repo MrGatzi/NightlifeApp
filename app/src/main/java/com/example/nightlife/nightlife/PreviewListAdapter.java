@@ -74,7 +74,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             TextView venuePriceIndex = (TextView)convertView.findViewById(R.id.preview_venue_venuePriceIndex);
 
             // set values with the current location data
-            venueImage.setImageResource(R.drawable.pub);
+            setVenueImages(venueImage, currentLocation.getVenueID());
             venueName.setText(currentLocation.getName());
             venueEventName.setText("");
             venueShortDescription.setText(currentLocation.getShortDescription());
@@ -107,7 +107,6 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
                 }
             });
 
-
         } else {
             // get current location
             Event currentLocation = (Event)locations.get(position);
@@ -121,7 +120,7 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             TextView eventPriceIndex = (TextView)convertView.findViewById(R.id.preview_event_eventPriceIndex);
 
             // set values with the current location data
-            eventImage.setImageResource(R.drawable.party);
+            setEventImages(eventImage, currentLocation.getEventID());
             eventName.setText(currentLocation.getName());
             eventDate.setText(currentLocation.getDate());
             eventShortDescription.setText(currentLocation.getShortDescription());
@@ -195,6 +194,8 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
         intent.putExtra("venueEvents", "");
         intent.putExtra("venueEventName", "");
         intent.putExtra("openingHours", "");
+        intent.putExtra("venueID", 0);
+        intent.putExtra("eventID", 0);
 
         if (getItemViewType(position) == VENUE) {
             if (((Venue) currentLocation).getVenueEvents().length != 0) {
@@ -207,11 +208,74 @@ public class PreviewListAdapter extends ArrayAdapter<Location> {
             if (((Venue) currentLocation).getOpeningHours().length != 0) {
                 intent.putExtra("openingHours", ((Venue) currentLocation).getAllOpeningHours());
             }
+            intent.putExtra("venueID", ((Venue) currentLocation).getVenueID());
         } else {
             intent.putExtra("eventDate", ((Event) currentLocation).getDate());
+            intent.putExtra("eventID", ((Event) currentLocation).getEventID());
         }
 
         context.startActivity(intent);
+    }
+
+    public boolean setVenueImages(ImageView view, int id) {
+        switch (id) {
+            case 5:
+                view.setImageResource(R.drawable.partymaus);
+                return true;
+            case 6:
+                view.setImageResource(R.drawable.sailors);
+                return true;
+            case 7:
+                view.setImageResource(R.drawable.local_buehne);
+                return true;
+            case 8:
+                view.setImageResource(R.drawable.lennox);
+                return true;
+            case 9:
+                view.setImageResource(R.drawable.turmstadl);
+                return true;
+            case 10:
+                view.setImageResource(R.drawable.musikparka1);
+                return true;
+            case 11:
+                view.setImageResource(R.drawable.evers);
+                return true;
+            case 12:
+                view.setImageResource(R.drawable.latino);
+                return true;
+            case 13:
+                view.setImageResource(R.drawable.schlag);
+                return true;
+            case 14:
+                view.setImageResource(R.drawable.rockford);
+                return true;
+            case 15:
+                view.setImageResource(R.drawable.pub_hagenberg);
+                return true;
+            case 16:
+                view.setImageResource(R.drawable.cafe_monika);
+                return true;
+            default:
+                view.setImageResource(R.drawable.pub);
+                return true;
+        }
+    }
+
+    public boolean setEventImages(ImageView view, int id) {
+        switch (id) {
+            case 1:
+                view.setImageResource(R.drawable.poetry_slam);
+                return true;
+            case 2:
+                view.setImageResource(R.drawable.lennox_jahresfeier);
+                return true;
+            case 3:
+                view.setImageResource(R.drawable.lennox_jahresfeier);
+                return true;
+            default:
+                view.setImageResource(R.drawable.party);
+                return true;
+        }
     }
 }
 
