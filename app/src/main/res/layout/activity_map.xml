@@ -38,7 +38,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:ems="10"
-                android:hint="City, Venue, …"
+                android:hint="Stadt, Lokal, …"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/search"
                 app:layout_constraintTop_toTopOf="parent"
