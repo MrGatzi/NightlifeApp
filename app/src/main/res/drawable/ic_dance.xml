@@ -1,0 +1,90 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="50dp"
+    android:height="50dp"
+    android:viewportWidth="50"
+    android:viewportHeight="50">
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M24.73,50a18.8,18.8 0,1 1,18.8 -18.8A18.82,18.82 0,0 1,24.73 50ZM24.73,14.34A16.86,16.86 0,1 0,41.59 31.2,16.87 16.87,0 0,0 24.73,14.34Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M23.76,0h1.94v10.14h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M28.8,13.24H26.86a2.14,2.14 0,0 0,-4.27 0H20.66a4.07,4.07 0,1 1,8.14 0Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M43.14,6.06h1.94v3.18h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M43.14,11.57h1.94v3.18h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M45.28,9.43h3.18v1.94h-3.18z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M39.77,9.43h3.18v1.94h-3.18z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M44.68,39.05h1.94v3.18h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M44.68,44.57h1.94v3.18h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M46.82,42.43h3.18v1.94h-3.18z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M41.3,42.43h3.18v1.94h-3.18z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M3.38,9.99h1.94v3.18h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M3.38,15.51h1.94v3.18h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M5.52,13.37h3.18v1.94h-3.18z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M0,13.37h3.18v1.94h-3.18z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M48.06,24.59h1.94v2.15h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M3.33,45.67h1.94v2.15h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M1.74,32.24h1.94v2.15h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M10.27,2.92h1.94v2.15h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M39.98,47.75h1.94v2.15h-1.94z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M28.62,48.8l-1.92,-0.3a117.55,117.55 0,0 0,1.13 -17.3,116.3 116.3,0 0,0 -1.18,-17.62l1.92,-0.31a119,119 0,0 1,1.2 17.93A120.36,120.36 0,0 1,28.62 48.8Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M20.86,48.91A118.47,118.47 0,0 1,19.69 31.2a119.32,119.32 0,0 1,1.2 -17.95l1.92,0.31A115.07,115.07 0,0 0,21.62 31.2a117.22,117.22 0,0 0,1.15 17.41Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M35,46.75l-1.83,-0.65a45.1,45.1 0,0 0,2.34 -14.9A44.85,44.85 0,0 0,33.05 16l1.82,-0.67A46.76,46.76 0,0 1,37.42 31.2,47.15 47.15,0 0,1 35,46.75Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M14.39,46.46A47.36,47.36 0,0 1,12 31.2a47.12,47.12 0,0 1,2.44 -15.53l1.83,0.65A45.07,45.07 0,0 0,14 31.2a45.44,45.44 0,0 0,2.24 14.63Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M24.73,36.24A120.61,120.61 0,0 1,7.41 35.13l0.29,-1.91a119.37,119.37 0,0 0,17 1.09,114.89 114.89,0 0,0 17.62,-1.19L42.66,35A117.64,117.64 0,0 1,24.73 36.24Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M42.4,29.28A116.82,116.82 0,0 0,24.73 28.1,117.85 117.85,0 0,0 7.55,29.21l-0.3,-1.92a120.67,120.67 0,0 1,17.48 -1.13,118.12 118.12,0 0,1 18,1.21Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M39.77,22.84a45,45 0,0 0,-15 -2.39A45.15,45.15 0,0 0,9.88 22.77l-0.65,-1.83a47.2,47.2 0,0 1,15.5 -2.43A47.14,47.14 0,0 1,40.43 21Z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M24.73,43.89A47.44,47.44 0,0 1,9.45 41.54l0.63,-1.84A45.55,45.55 0,0 0,24.73 42a45.15,45.15 0,0 0,15.06 -2.39l0.66,1.82A47,47 0,0 1,24.73 43.89Z"/>
+</vector>
