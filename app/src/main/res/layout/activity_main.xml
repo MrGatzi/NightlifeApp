@@ -55,9 +55,8 @@
         android:id="@+id/bottomNavigation"
         android:layout_alignParentBottom="true"
         android:background="?attr/colorPrimary"
-        app:itemIconTint="@color/colors_navigation"
-        app:itemTextColor="@color/colors_navigation"
-        app:menu="@menu/navigation">
+        app:menu="@menu/navigation"
+        android:paddingTop="13dp">
     </android.support.design.widget.BottomNavigationView>
 
     <include

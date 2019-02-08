@@ -6,12 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -112,6 +117,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         if(isServicesOK()) {
             BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+            bottomNavigation.setItemIconTintList(null);
+
+            BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigation.getChildAt(0);
+            //item size
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                final View iconView = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+                final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+                final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+                // set your height here
+                layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, displayMetrics);
+                // set your width here
+                layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, displayMetrics);
+                iconView.setLayoutParams(layoutParams);
+            }
             bottomNavigation.getMenu().getItem(0).setChecked(true);
             bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
